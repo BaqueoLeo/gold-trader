@@ -71,7 +71,7 @@ async function safeFetch(u,o){try{const r=await fetch(u,o);if(!r.ok)throw new Er
 
 // ═══ ANTHROPIC RATE-LIMITED QUEUE ═══
 let claudeQ=[],claudeBusy=false,lastClaudeCall=0;
-const CLAUDE_COOLDOWN=65000; // 65s between calls to stay under rate limit
+const CLAUDE_COOLDOWN=3000; // 65s between calls to stay under rate limit
 
 function enqClaude(prompt,maxTok,useSearch,cb){claudeQ.push({prompt,maxTok,useSearch,cb});}
 async function procClaude(){
@@ -120,7 +120,7 @@ async function masterUpdate(){
 
   // Step 4: Cooldown
   S.upd.step=3;render();
-  await new Promise(r=>setTimeout(r,5000));
+  await new Promise(r=>setTimeout(r,1000));
   S.upd.done.push(3);render();
 
   // Step 5: AI Plan with ALL context
