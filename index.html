@@ -70,27 +70,27 @@ function calcSR(d){if(d.length<5)return{S:[],R:[]};const c=d.map(x=>x.c),mn=Math
 async function safeFetch(u,o){try{const r=await fetch(u,o);if(!r.ok)throw new Error(`${r.status}`);return await r.json();}catch(e){console.warn('Fetch:',e.message);return null;}}
 
 // ═══ ANTHROPIC RATE-LIMITED QUEUE ═══
-let claudeQ=[],claudeBusy=false,lastClaudeCall=0;
-const CLAUDE_COOLDOWN=3000; // 65s between calls to stay under rate limit
-
-function enqClaude(prompt,maxTok,useSearch,cb){claudeQ.push({prompt,maxTok,useSearch,cb});}
-async function procClaude(){
-  if(claudeBusy||!claudeQ.length||!AK)return;
-  const elapsed=Date.now()-lastClaudeCall;
-  if(elapsed<CLAUDE_COOLDOWN){return;}
-  claudeBusy=true;
-  const{prompt,maxTok,useSearch,cb}=claudeQ.shift();
-  try{
-    const body={model:'claude-sonnet-4-20250514',max_tokens:maxTok||600,messages:[{role:'user',content:prompt}]};
-    if(useSearch)body.tools=[{type:'web_search_20250305',name:'web_search'}];
-    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':AK,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify(body)});
-    const d=await r.json();
-    if(d.error){cb(null,d.error.message);}else{
-    const txt=d.content?.filter(b=>b.type==='text').map(b=>b.text).join('')||'';cb(txt);}
-  }catch(e){cb(null,e.message);}
-  lastClaudeCall=Date.now();claudeBusy=false;
+// Direct Claude calls with auto-retry on rate limit
+async function callClaude(prompt,maxTok,useSearch){
+  if(!AK)return{txt:null,err:'No API key'};
+  const body={model:'claude-sonnet-4-20250514',max_tokens:maxTok||600,messages:[{role:'user',content:prompt}]};
+  if(useSearch)body.tools=[{type:'web_search_20250305',name:'web_search'}];
+  for(let attempt=0;attempt<3;attempt++){
+    try{
+      const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':AK,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify(body)});
+      const d=await r.json();
+      if(d.error){
+        if(d.error.message?.includes('rate limit')||d.error.message?.includes('credit balance')){
+          const wait=Math.min(70,(attempt+1)*25);
+          S.upd.retryMsg=`Rate limit - reintentando en ${wait}s...`;render();
+          await new Promise(r=>setTimeout(r,wait*1000));continue;}
+        return{txt:null,err:d.error.message};}
+      const txt=d.content?.filter(b=>b.type==='text').map(b=>b.text).join('')||'';
+      return{txt,err:null};
+    }catch(e){return{txt:null,err:e.message};}
+  }
+  return{txt:null,err:'Max retries exceeded'};
 }
-setInterval(procClaude,2000);
 
 // TD Queue
 let Q=[],tdBusy=false;function enq(u,cb){Q.push({u,cb});}function proc(){if(tdBusy||!Q.length)return;tdBusy=true;const{u,cb}=Q.shift();safeFetch(u).then(d=>cb(d)).finally(()=>{setTimeout(()=>{tdBusy=false},8500);});}setInterval(proc,1000);
@@ -102,21 +102,24 @@ function refP(){enq(TD(`price?symbol=XAU/USD`),d=>{if(d?.price){S.gold=+d.price;
 
 // ═══ MASTER UPDATE (single button) ═══
 async function masterUpdate(){
-  if(S.upd.running)return;
+  if(S.upd.running)return;S.upd.retryMsg=null;
   S.upd={running:true,step:0,done:[],steps:['Noticias macro+mercado','Noticias geopolíticas+oil+USD','Sentimiento social Reddit','⏳ Cooldown rate limit','Generando Plan IA completo']};
   render();
 
   // Step 1: Market news
   S.upd.step=0;render();
-  await new Promise(r=>{enqClaude('Search for the latest financial news affecting gold XAUUSD prices. Include: Fed decisions, inflation data, USD strength, bond yields, central bank gold purchases, ETF flows. Return ONLY valid JSON array (no markdown/backticks): [{"title":"string","impact":"positive"|"negative"|"neutral","summary":"1 sentence max","source":"string"}]. Max 8 items.',900,true,(txt,err)=>{if(txt){try{const a=JSON.parse(txt.replace(/```json|```/g,'').trim());if(Array.isArray(a))S.news=a;}catch{}}S.upd.done.push(0);render();r();});});
+  {const{txt}=await callClaude('Search for the latest financial news affecting gold XAUUSD prices. Include: Fed decisions, inflation data, USD strength, bond yields, central bank gold purchases, ETF flows. Return ONLY valid JSON array (no markdown/backticks): [{"title":"string","impact":"positive"|"negative"|"neutral","summary":"1 sentence max","source":"string"}]. Max 8 items.',900,true);
+  if(txt){try{const a=JSON.parse(txt.replace(/```json|```/g,'').trim());if(Array.isArray(a))S.news=a;}catch{}}S.upd.done.push(0);render();}
 
   // Step 2: Geopolitical news
   S.upd.step=1;render();
-  await new Promise(r=>{enqClaude('Search for latest geopolitical news, wars, tariffs, oil prices, sanctions that could affect gold XAUUSD. Return ONLY valid JSON array (no markdown): [{"title":"string","impact":"positive"|"negative"|"neutral","summary":"1 sentence","source":"string"}]. Max 6 items.',800,true,(txt,err)=>{if(txt){try{const a=JSON.parse(txt.replace(/```json|```/g,'').trim());if(Array.isArray(a))S.news=[...S.news,...a];}catch{}}S.nI=S.news.reduce((a,n)=>a+(n.impact==='positive'?1:n.impact==='negative'?-1:0),0);S.upd.done.push(1);render();r();});});
+  {const{txt}=await callClaude('Search for latest geopolitical news, wars, tariffs, oil prices, sanctions that could affect gold XAUUSD. Return ONLY valid JSON array (no markdown): [{"title":"string","impact":"positive"|"negative"|"neutral","summary":"1 sentence","source":"string"}]. Max 6 items.',800,true);
+  if(txt){try{const a=JSON.parse(txt.replace(/```json|```/g,'').trim());if(Array.isArray(a))S.news=[...S.news,...a];}catch{}}S.nI=S.news.reduce((a,n)=>a+(n.impact==='positive'?1:n.impact==='negative'?-1:0),0);S.upd.done.push(1);render();}
 
   // Step 3: Social sentiment
   S.upd.step=2;render();
-  await new Promise(r=>{enqClaude('Search Reddit r/Daytrading, r/Forex, r/wallstreetbets and trading forums for recent opinions about gold XAUUSD. What are traders saying? Are they bullish or bearish? What rumors exist? Return ONLY valid JSON array (no markdown): [{"title":"short title","opinion":"quote or summary","sentiment":"bullish"|"bearish"|"neutral","source":"subreddit or forum","rumor":"any rumor mentioned or null"}]. Max 6 items.',800,true,(txt,err)=>{if(txt){try{const a=JSON.parse(txt.replace(/```json|```/g,'').trim());if(Array.isArray(a))S.social=a;}catch{}}S.upd.done.push(2);render();r();});});
+  {const{txt}=await callClaude('Search Reddit r/Daytrading, r/Forex, r/wallstreetbets and trading forums for recent opinions about gold XAUUSD. What are traders saying? Are they bullish or bearish? What rumors exist? Return ONLY valid JSON array (no markdown): [{"title":"short title","opinion":"quote or summary","sentiment":"bullish"|"bearish"|"neutral","source":"subreddit or forum","rumor":"any rumor mentioned or null"}]. Max 6 items.',800,true);
+  if(txt){try{const a=JSON.parse(txt.replace(/```json|```/g,'').trim());if(Array.isArray(a))S.social=a;}catch{}}S.upd.done.push(2);render();}
 
   // Step 4: Cooldown
   S.upd.step=3;render();
@@ -164,7 +167,9 @@ Total: ${S.bot.tT} trades, ${S.bot.w}W/${S.bot.l}L, ${S.bot.resets} resets
 Responde SOLO en JSON válido (sin backticks ni markdown):
 {"action":"COMPRA"|"VENTA"|"ESPERAR","confidence":0-100,"reasoning":"explicación detallada en español 3-5 oraciones","entry":"precio exacto o null","sl":"precio exacto o null","tp":"precio exacto o null","risk":"advertencia específica","newsImpact":"resumen de cómo las noticias afectan la decisión","socialSentiment":"resumen del sentimiento social y rumores","marketCondition":"descripción del estado actual del mercado","nextAction":"qué hacer si el precio sube/baja desde aquí"}`;
 
-  await new Promise(r=>{enqClaude(planPrompt,800,false,(txt,err)=>{if(txt){try{S.aiPlan=JSON.parse(txt.replace(/```json|```/g,'').trim());}catch{S.aiPlan={action:'ERROR',reasoning:txt?.slice(0,300)||err||'Error parsing'};}}else{S.aiPlan={action:'ERROR',reasoning:err||'Error desconocido'};}S.upd.done.push(4);render();r();});});
+  {const{txt,err}=await callClaude(planPrompt,800,false);
+  if(txt){try{S.aiPlan=JSON.parse(txt.replace(/```json|```/g,'').trim());}catch{S.aiPlan={action:'ERROR',reasoning:txt?.slice(0,300)||'Error parsing'};}}
+  else{S.aiPlan={action:'ERROR',reasoning:err||'Error desconocido'};}S.upd.done.push(4);render();}
 
   S.upd.running=false;
   // Update bot plan based on AI
@@ -264,7 +269,7 @@ const cw=Math.min(window.innerWidth-16,430);let h='';
 
 // UPDATE STATUS BAR (shows on all tabs when running)
 if(S.upd.running){h+=`<div class="upd-status"><div class="lb" style="margin-bottom:4px">🔄 ACTUALIZANDO...</div>`;
-S.upd.steps.forEach((step,i)=>{const cls=S.upd.done.includes(i)?'upd-done':i===S.upd.step?'upd-active':'upd-wait';h+=`<div class="upd-step"><div class="upd-dot ${cls}"></div><span style="color:${S.upd.done.includes(i)?'var(--g)':i===S.upd.step?'var(--y)':'var(--dim)'}">${step}</span></div>`;});h+=`</div>`;}
+S.upd.steps.forEach((step,i)=>{const cls=S.upd.done.includes(i)?'upd-done':i===S.upd.step?'upd-active':'upd-wait';h+=`<div class="upd-step"><div class="upd-dot ${cls}"></div><span style="color:${S.upd.done.includes(i)?'var(--g)':i===S.upd.step?'var(--y)':'var(--dim)'}">${step}</span></div>`;});if(S.upd.retryMsg)h+=`<div style="font-size:8px;color:var(--y);margin-top:4px">⏳ ${S.upd.retryMsg}</div>`;h+=`</div>`;}
 
 if(S.tab==='chart'){
 h+=`<div class="cd">${rChart(d,sr,cw-36,155)}</div>`;
