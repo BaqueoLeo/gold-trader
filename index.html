@@ -98,7 +98,9 @@ let Q=[],tdBusy=false;function enq(u,cb){Q.push({u,cb});}function proc(){if(tdBu
 // ═══ DATA ═══
 async function ldCandles(){const d=await safeFetch(TD(`time_series?symbol=XAU/USD&interval=${S.tf}&outputsize=50`));if(d?.values){S.candles=d.values.reverse().map(v=>({t:new Date(v.datetime).getTime(),o:+v.open,h:+v.high,l:+v.low,c:+v.close}));S.status='live';}render();}
 async function ldQuote(){const d=await safeFetch(TD(`quote?symbol=XAU/USD`));if(d?.close){S.gold=+d.close;S.q={open:+d.open,high:+d.high,low:+d.low,close:+d.close,prev:+d.previous_close,ch:+d.change,chp:+d.percent_change,w52l:+d.fifty_two_week?.low,w52h:+d.fifty_two_week?.high};S.status='live';}render();}
-function refP(){enq(TD(`price?symbol=XAU/USD`),d=>{if(d?.price){S.gold=+d.price;S.status='live';if(S.candles.length){const l=S.candles[S.candles.length-1];l.c=S.gold;l.h=Math.max(l.h,S.gold);l.l=Math.min(l.l,S.gold);}runBot();render();}});setTimeout(()=>{enq(TD(`price?symbol=BTC/USD,EUR/USD,ETH/USD`),d=>{if(d){S.corr={btc:d['BTC/USD']?.price?+d['BTC/USD'].price:null,eur:d['EUR/USD']?.price?+d['EUR/USD'].price:null,eth:d['ETH/USD']?.price?+d['ETH/USD'].price:null};render();}});},10000);}
+async function refP(){
+try{const d=await safeFetch(TD(`price?symbol=XAU/USD`));if(d?.price){S.gold=+d.price;S.status='live';if(S.candles.length){const l=S.candles[S.candles.length-1];l.c=S.gold;l.h=Math.max(l.h,S.gold);l.l=Math.min(l.l,S.gold);}runBot();render();}}catch{}
+setTimeout(async()=>{try{const d=await safeFetch(TD(`price?symbol=BTC/USD,EUR/USD,ETH/USD`));if(d&&!d.code){S.corr={btc:d['BTC/USD']?.price?+d['BTC/USD'].price:null,eur:d['EUR/USD']?.price?+d['EUR/USD'].price:null,eth:d['ETH/USD']?.price?+d['ETH/USD'].price:null};render();}}catch{}},15000);}
 
 // ═══ MASTER UPDATE (single button) ═══
 async function masterUpdate(){
@@ -320,7 +322,9 @@ document.getElementById('cnt').innerHTML=h;}catch(e){console.error('Render:',e);
 function setTab(t){S.tab=t;render();}
 function setTF(t){S.tf=t;document.querySelectorAll('.tf').forEach(b=>{const v=b.textContent.toLowerCase().replace(' ','');b.classList.toggle('a',v===(t==='15min'?'15m':t==='1day'?'1d':t));});ldCandles();}
 
-async function init(){loadHistory();try{await ldQuote();await ldCandles();refP();setInterval(refP,35000);setInterval(()=>{S.fear=Math.max(5,Math.min(95,S.fear+(Math.random()-0.5)*2));},25000);}catch(e){console.error('Init:',e);}render();}
+async function init(){loadHistory();try{await ldQuote();await ldCandles();
+try{const cd=await safeFetch(TD(`price?symbol=BTC/USD,EUR/USD,ETH/USD`));if(cd&&!cd.code){S.corr={btc:cd['BTC/USD']?.price?+cd['BTC/USD'].price:null,eur:cd['EUR/USD']?.price?+cd['EUR/USD'].price:null,eth:cd['ETH/USD']?.price?+cd['ETH/USD'].price:null};}}catch{}
+refP();setInterval(refP,35000);setInterval(()=>{S.fear=Math.max(5,Math.min(95,S.fear+(Math.random()-0.5)*2));},25000);}catch(e){console.error('Init:',e);}render();}
 ldCfg();
 </script>
 </body>
