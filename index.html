@@ -3,75 +3,40 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
-<title>XAUUSD · Gold Trader</title>
+<title>XAUUSD · Gold Trader v5</title>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#060b14;--card:#0d1420;--bdr:#15202e;--dim:#4a5a72;--txt:#cbd5e1;--br:#f1f5f9;--g:#10b981;--r:#ef4444;--y:#f59e0b;--b:#3b82f6;--p:#8b5cf6}
-*{margin:0;padding:0;box-sizing:border-box}
-body{background:var(--bg);color:var(--txt);font-family:'JetBrains Mono',monospace;font-size:12px;max-width:460px;margin:0 auto;min-height:100vh;overflow-x:hidden}
-.cfg{position:fixed;inset:0;background:var(--bg);z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;max-width:460px;margin:0 auto}
-.cfg h2{color:var(--br);font-size:16px;margin-bottom:12px}.cfg input{width:100%;padding:10px;margin-bottom:8px;background:#111827;border:1px solid var(--bdr);border-radius:6px;color:var(--txt);font-family:inherit;font-size:11px}.cfg button{width:100%;padding:12px;background:#1d4ed8;color:#fff;border:none;border-radius:6px;font-weight:700;font-family:inherit;cursor:pointer;font-size:13px;margin-top:4px}.cfg .nt{font-size:8px;color:var(--dim);margin-top:8px;text-align:center;line-height:1.5}
-.cfg .rst{background:#7f1d1d;margin-top:8px;font-size:10px;padding:8px}
-.hdr{padding:10px 10px 6px;background:linear-gradient(180deg,#0a1020,var(--bg));border-bottom:1px solid var(--bdr);position:sticky;top:0;z-index:50}
-.hdr-r{display:flex;justify-content:space-between;align-items:center;margin-bottom:2px}.hdr-l{display:flex;align-items:center;gap:4px}
-.sym{font-size:9px;color:var(--dim);letter-spacing:2px}
-.bd{display:inline-block;padding:2px 6px;border-radius:4px;font-size:8px;font-weight:700;border:1px solid var(--bdr);background:#111827;color:#94a3b8}
-.bd-g{background:#052e16;color:#4ade80;border-color:#14532d}.bd-r{background:#350a0a;color:#f87171;border-color:#7f1d1d}.bd-y{background:#422006;color:#fbbf24;border-color:#78350f}
-.pr{display:flex;align-items:baseline;gap:6px;margin-bottom:1px}.pm{font-size:22px;font-weight:800;color:var(--br);letter-spacing:-1px}.pc{font-size:11px;font-weight:600}
-.ind{display:flex;gap:6px;font-size:7.5px;color:var(--dim);flex-wrap:wrap}
-.tfb{display:flex;gap:2px}.tf{padding:2px 7px;border-radius:3px;border:none;cursor:pointer;font-size:8px;font-weight:700;font-family:inherit;background:#111827;color:var(--dim)}.tf.a{background:#1d4ed8;color:#fff}
-.cnt{padding:4px 8px 68px}.cd{background:var(--card);border-radius:8px;border:1px solid var(--bdr);padding:10px;margin-bottom:6px}
-.lb{font-size:8px;color:var(--dim);letter-spacing:1.5px;font-weight:600}
-.tb{display:flex;position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:460px;background:#080e19;border-top:1px solid var(--bdr);z-index:100}
-.tbn{flex:1;padding:4px 0 8px;border:none;background:none;cursor:pointer;font-size:8px;font-weight:600;display:flex;flex-direction:column;align-items:center;gap:1px;font-family:inherit;color:#2a3a52}.tbn.a{color:var(--b)}.tbn .ic{font-size:14px}
+*{margin:0;padding:0;box-sizing:border-box}body{background:var(--bg);color:var(--txt);font-family:'JetBrains Mono',monospace;font-size:12px;max-width:460px;margin:0 auto;min-height:100vh;overflow-x:hidden}
+.cfg{position:fixed;inset:0;background:var(--bg);z-index:999;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:20px;max-width:460px;margin:0 auto}.cfg h2{color:var(--br);font-size:16px;margin-bottom:12px}.cfg input{width:100%;padding:10px;margin-bottom:8px;background:#111827;border:1px solid var(--bdr);border-radius:6px;color:var(--txt);font-family:inherit;font-size:11px}.cfg button{width:100%;padding:12px;background:#1d4ed8;color:#fff;border:none;border-radius:6px;font-weight:700;font-family:inherit;cursor:pointer;font-size:13px;margin-top:4px}.cfg .rst{background:#7f1d1d;margin-top:8px;font-size:10px;padding:8px}.cfg .nt{font-size:8px;color:var(--dim);margin-top:8px;text-align:center;line-height:1.5}
+.hdr{padding:8px 10px 5px;background:linear-gradient(180deg,#0a1020,var(--bg));border-bottom:1px solid var(--bdr);position:sticky;top:0;z-index:50}.hdr-r{display:flex;justify-content:space-between;align-items:center;margin-bottom:2px}.hdr-l{display:flex;align-items:center;gap:4px}.sym{font-size:9px;color:var(--dim);letter-spacing:2px}
+.bd{display:inline-block;padding:2px 6px;border-radius:4px;font-size:8px;font-weight:700;border:1px solid var(--bdr);background:#111827;color:#94a3b8}.bd-g{background:#052e16;color:#4ade80;border-color:#14532d}.bd-r{background:#350a0a;color:#f87171;border-color:#7f1d1d}.bd-y{background:#422006;color:#fbbf24;border-color:#78350f}
+.pr{display:flex;align-items:baseline;gap:6px;margin-bottom:1px}.pm{font-size:22px;font-weight:800;color:var(--br);letter-spacing:-1px}.pc{font-size:11px;font-weight:600}.ind{display:flex;gap:6px;font-size:7.5px;color:var(--dim);flex-wrap:wrap}
+.tfb{display:flex;gap:2px}.tf{padding:2px 6px;border-radius:3px;border:none;cursor:pointer;font-size:8px;font-weight:700;font-family:inherit;background:#111827;color:var(--dim)}.tf.a{background:#1d4ed8;color:#fff}
+.cnt{padding:4px 8px 68px}.cd{background:var(--card);border-radius:8px;border:1px solid var(--bdr);padding:10px;margin-bottom:6px}.lb{font-size:8px;color:var(--dim);letter-spacing:1.5px;font-weight:600}
+.tb{display:flex;position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:460px;background:#080e19;border-top:1px solid var(--bdr);z-index:100}.tbn{flex:1;padding:4px 0 8px;border:none;background:none;cursor:pointer;font-size:8px;font-weight:600;display:flex;flex-direction:column;align-items:center;gap:1px;font-family:inherit;color:#2a3a52}.tbn.a{color:var(--b)}.tbn .ic{font-size:14px}
 .pb{background:#111827;border-radius:3px;height:4px;overflow:hidden}.pf{height:100%;border-radius:3px;transition:width 0.5s}
-.rbtn{padding:3px 7px;border-radius:3px;border:none;cursor:pointer;background:#1d4ed8;color:#fff;font-size:8px;font-weight:700;font-family:inherit}.rbtn:disabled{opacity:0.5}
-.sr{display:flex;justify-content:space-between;padding:1px 0;font-size:9px}
-.g2{display:grid;grid-template-columns:1fr 1fr;gap:5px}.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px}.g4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:3px}
-.sig{display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid #0f1a28;font-size:9px}
-.tr{display:flex;justify-content:space-between;align-items:center;padding:3px 0;border-bottom:1px solid #0f1a28;font-size:8px}
-.cb{background:#0a1020;border-radius:5px;padding:6px;text-align:center}
-.err{background:#350a0a;border:1px solid #7f1d1d;border-radius:6px;padding:8px;margin-bottom:6px;font-size:9px;color:#f87171}
-.chat-fab{position:fixed;bottom:62px;right:12px;width:46px;height:46px;border-radius:50%;background:linear-gradient(135deg,#1d4ed8,#7c3aed);border:none;cursor:pointer;z-index:200;display:flex;align-items:center;justify-content:center;font-size:20px;box-shadow:0 4px 20px rgba(29,78,216,0.5)}
-.chat-panel{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:460px;height:70vh;background:var(--bg);border-top:2px solid #1d4ed8;z-index:300;display:none;flex-direction:column;border-radius:14px 14px 0 0}
-.chat-panel.open{display:flex}
-.chat-hdr{padding:8px 12px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--bdr)}
-.chat-hdr span{font-size:11px;font-weight:700;color:var(--br)}.chat-close{background:none;border:none;color:var(--dim);font-size:18px;cursor:pointer;padding:4px}
-.chat-msgs{flex:1;overflow-y:auto;padding:8px 10px;display:flex;flex-direction:column;gap:6px}
-.chat-msg{max-width:85%;padding:7px 9px;border-radius:10px;font-size:10px;line-height:1.4;word-wrap:break-word}
-.chat-msg.user{align-self:flex-end;background:#1d4ed8;color:#fff;border-bottom-right-radius:2px}
-.chat-msg.ai{align-self:flex-start;background:#111827;color:var(--txt);border-bottom-left-radius:2px;border:1px solid var(--bdr)}
-.chat-input{display:flex;gap:5px;padding:6px 10px;border-top:1px solid var(--bdr);background:#0a1020}
-.chat-input input{flex:1;padding:7px 9px;background:#111827;border:1px solid var(--bdr);border-radius:6px;color:var(--txt);font-family:inherit;font-size:10px}
-.chat-input button{padding:7px 12px;background:#1d4ed8;color:#fff;border:none;border-radius:6px;font-weight:700;font-family:inherit;cursor:pointer;font-size:11px}
+.rbtn{padding:4px 8px;border-radius:3px;border:none;cursor:pointer;background:#1d4ed8;color:#fff;font-size:8px;font-weight:700;font-family:inherit}.rbtn:disabled{opacity:0.5}.rbtn.big{padding:8px 14px;font-size:10px;width:100%}
+.sr{display:flex;justify-content:space-between;padding:1px 0;font-size:9px}.g2{display:grid;grid-template-columns:1fr 1fr;gap:5px}.g3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:5px}.g4{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:3px}
+.sig{display:flex;justify-content:space-between;padding:3px 0;border-bottom:1px solid #0f1a28;font-size:9px}.tr{display:flex;justify-content:space-between;align-items:center;padding:3px 0;border-bottom:1px solid #0f1a28;font-size:8px}.cb{background:#0a1020;border-radius:5px;padding:6px;text-align:center}
+.upd-status{background:#111827;border:1px solid var(--bdr);border-radius:6px;padding:8px;margin-bottom:6px;font-size:9px;color:var(--dim)}.upd-step{display:flex;align-items:center;gap:6px;padding:2px 0}.upd-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}.upd-done{background:var(--g)}.upd-active{background:var(--y);animation:pulse 1s infinite}.upd-wait{background:#1e293b}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+.chat-fab{position:fixed;bottom:62px;right:12px;width:44px;height:44px;border-radius:50%;background:linear-gradient(135deg,#1d4ed8,#7c3aed);border:none;cursor:pointer;z-index:200;display:flex;align-items:center;justify-content:center;font-size:18px;box-shadow:0 4px 16px rgba(29,78,216,0.4)}
+.chat-panel{position:fixed;bottom:0;left:50%;transform:translateX(-50%);width:100%;max-width:460px;height:70vh;background:var(--bg);border-top:2px solid #1d4ed8;z-index:300;display:none;flex-direction:column;border-radius:14px 14px 0 0}.chat-panel.open{display:flex}
+.chat-hdr{padding:8px 12px;display:flex;justify-content:space-between;align-items:center;border-bottom:1px solid var(--bdr)}.chat-hdr span{font-size:11px;font-weight:700;color:var(--br)}.chat-close{background:none;border:none;color:var(--dim);font-size:18px;cursor:pointer;padding:4px}
+.chat-msgs{flex:1;overflow-y:auto;padding:8px 10px;display:flex;flex-direction:column;gap:6px}.chat-msg{max-width:85%;padding:7px 9px;border-radius:10px;font-size:10px;line-height:1.4;word-wrap:break-word}.chat-msg.user{align-self:flex-end;background:#1d4ed8;color:#fff;border-bottom-right-radius:2px}.chat-msg.ai{align-self:flex-start;background:#111827;color:var(--txt);border-bottom-left-radius:2px;border:1px solid var(--bdr)}
+.chat-input{display:flex;gap:5px;padding:6px 10px;border-top:1px solid var(--bdr);background:#0a1020}.chat-input input{flex:1;padding:7px 9px;background:#111827;border:1px solid var(--bdr);border-radius:6px;color:var(--txt);font-family:inherit;font-size:10px}.chat-input button{padding:7px 12px;background:#1d4ed8;color:#fff;border:none;border-radius:6px;font-weight:700;font-family:inherit;cursor:pointer;font-size:11px}
 </style>
 </head>
 <body>
-<div class="cfg" id="cfgS">
-<h2>🏆 Gold Trader XM</h2>
-<input id="c1" placeholder="Twelve Data API Key">
-<input id="c3" placeholder="Anthropic API Key">
-<button onclick="saveCfg()">Iniciar Dashboard</button>
-<button class="rst" onclick="resetAll()">🗑 Reset completo (si se trabó)</button>
-<div class="nt">Keys guardadas localmente · Anthropic se usa para noticias, social, plan IA y chat</div>
-</div>
+<div class="cfg" id="cfgS"><h2>🏆 Gold Trader XM v5</h2><input id="c1" placeholder="Twelve Data API Key"><input id="c3" placeholder="Anthropic API Key"><button onclick="saveCfg()">Iniciar</button><button class="rst" onclick="resetAll()">🗑 Reset (si se trabó)</button><div class="nt">v5: Cola inteligente · Plan IA guía al Bot · Historial persistente</div></div>
 <div id="app" style="display:none">
-<div class="hdr"><div class="hdr-r"><div class="hdr-l"><span class="sym">XAUUSD</span><span class="bd">XM 500:1</span><span id="sDot" style="width:5px;height:5px;border-radius:50%;display:inline-block;background:var(--y)"></span><span id="sTxt" style="font-size:7px;color:var(--y)">...</span></div><div class="tfb"><button class="tf" onclick="setTF('15min')">15m</button><button class="tf a" onclick="setTF('1h')">1H</button><button class="tf" onclick="setTF('4h')">4H</button></div></div><div class="pr"><span class="pm" id="pM">...</span><span class="pc" id="pC"></span></div><div class="ind" id="ind"></div></div>
+<div class="hdr"><div class="hdr-r"><div class="hdr-l"><span class="sym">XAUUSD</span><span class="bd">XM 500:1</span><span id="sDot" style="width:5px;height:5px;border-radius:50%;display:inline-block;background:var(--y)"></span><span id="sTxt" style="font-size:7px;color:var(--y)">...</span></div><div class="tfb"><button class="tf" onclick="setTF('15min')">15m</button><button class="tf a" onclick="setTF('1h')">1H</button><button class="tf" onclick="setTF('4h')">4H</button><button class="tf" onclick="setTF('1day')">1D</button></div></div><div class="pr"><span class="pm" id="pM">...</span><span class="pc" id="pC"></span></div><div class="ind" id="ind"></div></div>
 <div class="cnt" id="cnt"></div>
 <button class="chat-fab" id="chatFab" onclick="toggleChat()">🧠</button>
-<div class="chat-panel" id="chatPanel">
-<div class="chat-hdr"><span>🧠 Asistente Gold IA</span><button class="chat-close" onclick="toggleChat()">✕</button></div>
-<div class="chat-msgs" id="chatMsgs"><div class="chat-msg ai">Hola Leo. Tengo acceso a precio, indicadores, noticias, sentimiento social y tu cuenta del bot. ¿Qué necesitas?</div></div>
-<div class="chat-input"><input id="chatIn" placeholder="Pregunta..." onkeydown="if(event.key==='Enter')sendChat()"><button onclick="sendChat()">→</button></div>
+<div class="chat-panel" id="chatPanel"><div class="chat-hdr"><span>🧠 Asistente IA</span><button class="chat-close" onclick="toggleChat()">✕</button></div><div class="chat-msgs" id="chatMsgs"><div class="chat-msg ai">Hola Leo. Tengo acceso a todo el dashboard. ¿Qué necesitas?</div></div><div class="chat-input"><input id="chatIn" placeholder="Pregunta..." onkeydown="if(event.key==='Enter')sendChat()"><button onclick="sendChat()">→</button></div></div>
+<div class="tb"><button class="tbn a" onclick="setTab('chart')"><span class="ic">📈</span>Gráfica</button><button class="tbn" onclick="setTab('plan')"><span class="ic">🎯</span>Plan</button><button class="tbn" onclick="setTab('bot')"><span class="ic">🤖</span>Bot</button><button class="tbn" onclick="setTab('news')"><span class="ic">📰</span>Info</button></div>
 </div>
-<div class="tb">
-<button class="tbn a" onclick="setTab('chart')"><span class="ic">📈</span>Gráfica</button>
-<button class="tbn" onclick="setTab('plan')"><span class="ic">🎯</span>Plan</button>
-<button class="tbn" onclick="setTab('bot')"><span class="ic">🤖</span>Bot</button>
-<button class="tbn" onclick="setTab('news')"><span class="ic">📰</span>Noticias</button>
-</div>
-</div>
-
 <script>
 let TK='',AK='';
 function resetAll(){localStorage.clear();location.reload();}
@@ -84,130 +49,204 @@ const XM={bal:100,lev:500,so:20,cs:100};
 const fmt=n=>`$${Math.abs(n).toFixed(2)}`;const fS=n=>n>=0?`+$${n.toFixed(2)}`:`-$${Math.abs(n).toFixed(2)}`;const fP=n=>n?`$${n.toFixed(2)}`:'—';
 const cPnL=(t,e,c,l)=>(t==='BUY'?c-e:e-c)*l*XM.cs;const cMg=(p,l)=>(p*l*XM.cs)/XM.lev;const bd=(c,t)=>`<span class="bd bd-${c}">${t}</span>`;
 
+// Lot scaling based on balance
+function getLots(bal){if(bal<200)return 0.03;if(bal<500)return 0.05;if(bal<1000)return 0.08;if(bal<5000)return 0.15;if(bal<20000)return 0.5;if(bal<100000)return 1.0;return 2.0;}
+
 let S={tab:'chart',tf:'1h',gold:null,q:null,candles:[],corr:{btc:null,eur:null,eth:null},status:'connecting',
 bot:{bal:100,eq:100,pos:null,trades:[],tT:0,w:0,l:0,resets:0,plan:{action:'ESPERAR',conf:0,signals:{},score:0},ml:0},
-news:[],social:[],nI:0,nL:false,sL:false,fear:42,aiPlan:null,aiL:false,chatHist:[],errors:[]};
+news:[],social:[],nI:0,fear:42,aiPlan:null,
+upd:{running:false,step:0,steps:['Noticias macro','Noticias geopolíticas','Sentimiento social','Esperando rate limit','Generando Plan IA'],done:[]},
+chatHist:[]};
+
+// Load persistent history
+function loadHistory(){try{const h=JSON.parse(localStorage.getItem('gt_trades')||'[]');const b=JSON.parse(localStorage.getItem('gt_bot')||'null');if(h.length)S.bot.trades=h;if(b){S.bot.bal=b.bal;S.bot.eq=b.eq;S.bot.tT=b.tT;S.bot.w=b.w;S.bot.l=b.l;S.bot.resets=b.resets;}}catch{}}
+function saveHistory(){try{localStorage.setItem('gt_trades',JSON.stringify(S.bot.trades));localStorage.setItem('gt_bot',JSON.stringify({bal:S.bot.bal,eq:S.bot.eq,tT:S.bot.tT,w:S.bot.w,l:S.bot.l,resets:S.bot.resets}));}catch{}}
 
 function sma(d,p){if(d.length<p)return null;return d.slice(-p).reduce((a,b)=>a+b.c,0)/p;}
 function calcRSI(d,p=14){if(d.length<p+1)return 50;const ch=[];for(let i=d.length-p;i<d.length;i++)ch.push(d[i].c-d[i-1].c);const g=ch.filter(c=>c>0).reduce((a,b)=>a+b,0)/p;const l=Math.abs(ch.filter(c=>c<0).reduce((a,b)=>a+b,0))/p;return l===0?100:100-100/(1+g/l);}
 function calcMACD(d){const e=(dt,p)=>{if(dt.length<p)return null;const k=2/(p+1);let v=dt.slice(0,p).reduce((a,b)=>a+b.c,0)/p;for(let i=p;i<dt.length;i++)v=dt[i].c*k+v*(1-k);return v;};const e12=e(d,12),e26=e(d,26);if(!e12||!e26)return{hist:0};return{hist:(e12-e26)*0.2};}
 function calcSR(d){if(d.length<5)return{S:[],R:[]};const c=d.map(x=>x.c),mn=Math.min(...c),mx=Math.max(...c),rn=mx-mn||1;return{S:[mn+rn*0.05,mn+rn*0.236,mn+rn*0.382],R:[mn+rn*0.618,mn+rn*0.786,mn+rn*0.95]};}
 
-// SAFE FETCH
-async function safeFetch(url,opts){try{const r=await fetch(url,opts);if(!r.ok)throw new Error(`HTTP ${r.status}`);return await r.json();}catch(e){console.warn('Fetch error:',e.message);return null;}}
+async function safeFetch(u,o){try{const r=await fetch(u,o);if(!r.ok)throw new Error(`${r.status}`);return await r.json();}catch(e){console.warn('Fetch:',e.message);return null;}}
 
-// ANTHROPIC CALL
-async function askClaude(prompt,maxTok=600,useSearch=false){
-if(!AK)return null;
-const body={model:'claude-sonnet-4-20250514',max_tokens:maxTok,messages:[{role:'user',content:prompt}]};
-if(useSearch)body.tools=[{type:'web_search_20250305',name:'web_search'}];
-try{const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':AK,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify(body)});
-const d=await r.json();if(d.error){S.errors.push(d.error.message);return null;}
-return d.content?.filter(b=>b.type==='text').map(b=>b.text).join('')||null;}catch(e){S.errors.push(e.message);return null;}}
+// ═══ ANTHROPIC RATE-LIMITED QUEUE ═══
+let claudeQ=[],claudeBusy=false,lastClaudeCall=0;
+const CLAUDE_COOLDOWN=65000; // 65s between calls to stay under rate limit
 
-// API QUEUE for Twelve Data
-let Q=[],busy=false;
-function enq(u,cb){Q.push({u,cb});}
-function proc(){if(busy||!Q.length)return;busy=true;const{u,cb}=Q.shift();safeFetch(u).then(d=>cb(d)).finally(()=>{setTimeout(()=>{busy=false},8500);});}
-setInterval(proc,1000);
+function enqClaude(prompt,maxTok,useSearch,cb){claudeQ.push({prompt,maxTok,useSearch,cb});}
+async function procClaude(){
+  if(claudeBusy||!claudeQ.length||!AK)return;
+  const elapsed=Date.now()-lastClaudeCall;
+  if(elapsed<CLAUDE_COOLDOWN){return;}
+  claudeBusy=true;
+  const{prompt,maxTok,useSearch,cb}=claudeQ.shift();
+  try{
+    const body={model:'claude-sonnet-4-20250514',max_tokens:maxTok||600,messages:[{role:'user',content:prompt}]};
+    if(useSearch)body.tools=[{type:'web_search_20250305',name:'web_search'}];
+    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':AK,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify(body)});
+    const d=await r.json();
+    if(d.error){cb(null,d.error.message);}else{
+    const txt=d.content?.filter(b=>b.type==='text').map(b=>b.text).join('')||'';cb(txt);}
+  }catch(e){cb(null,e.message);}
+  lastClaudeCall=Date.now();claudeBusy=false;
+}
+setInterval(procClaude,2000);
 
-// DATA LOADING
+// TD Queue
+let Q=[],tdBusy=false;function enq(u,cb){Q.push({u,cb});}function proc(){if(tdBusy||!Q.length)return;tdBusy=true;const{u,cb}=Q.shift();safeFetch(u).then(d=>cb(d)).finally(()=>{setTimeout(()=>{tdBusy=false},8500);});}setInterval(proc,1000);
+
+// ═══ DATA ═══
 async function ldCandles(){const d=await safeFetch(TD(`time_series?symbol=XAU/USD&interval=${S.tf}&outputsize=50`));if(d?.values){S.candles=d.values.reverse().map(v=>({t:new Date(v.datetime).getTime(),o:+v.open,h:+v.high,l:+v.low,c:+v.close}));S.status='live';}render();}
 async function ldQuote(){const d=await safeFetch(TD(`quote?symbol=XAU/USD`));if(d?.close){S.gold=+d.close;S.q={open:+d.open,high:+d.high,low:+d.low,close:+d.close,prev:+d.previous_close,ch:+d.change,chp:+d.percent_change,w52l:+d.fifty_two_week?.low,w52h:+d.fifty_two_week?.high};S.status='live';}render();}
-function refP(){enq(TD(`price?symbol=XAU/USD`),d=>{if(d?.price){S.gold=+d.price;S.status='live';if(S.candles.length){const l=S.candles[S.candles.length-1];l.c=S.gold;l.h=Math.max(l.h,S.gold);l.l=Math.min(l.l,S.gold);}runBot();render();}});
-setTimeout(()=>{enq(TD(`price?symbol=BTC/USD,EUR/USD,ETH/USD`),d=>{if(d){S.corr={btc:d['BTC/USD']?.price?+d['BTC/USD'].price:null,eur:d['EUR/USD']?.price?+d['EUR/USD'].price:null,eth:d['ETH/USD']?.price?+d['ETH/USD'].price:null};render();}});},10000);}
+function refP(){enq(TD(`price?symbol=XAU/USD`),d=>{if(d?.price){S.gold=+d.price;S.status='live';if(S.candles.length){const l=S.candles[S.candles.length-1];l.c=S.gold;l.h=Math.max(l.h,S.gold);l.l=Math.min(l.l,S.gold);}runBot();render();}});setTimeout(()=>{enq(TD(`price?symbol=BTC/USD,EUR/USD,ETH/USD`),d=>{if(d){S.corr={btc:d['BTC/USD']?.price?+d['BTC/USD'].price:null,eur:d['EUR/USD']?.price?+d['EUR/USD'].price:null,eth:d['ETH/USD']?.price?+d['ETH/USD'].price:null};render();}});},10000);}
 
-// NEWS via Claude web_search
-async function fetchNews(){S.nL=true;render();
-const txt=await askClaude('Search for the latest news affecting gold XAUUSD prices today. Include geopolitics, wars, tariffs, USD, oil, Fed decisions, inflation. Return ONLY a valid JSON array (no markdown, no backticks, no explanation) of max 6 objects: [{"title":"string","impact":"positive"|"negative"|"neutral","summary":"1 sentence","source":"string"}]',800,true);
-if(txt){try{const clean=txt.replace(/```json|```/g,'').trim();const arr=JSON.parse(clean);if(Array.isArray(arr)){S.news=arr;S.nI=arr.reduce((a,n)=>a+(n.impact==='positive'?1:n.impact==='negative'?-1:0),0);}}catch(e){console.warn('News parse error:',e);}}
-S.nL=false;render();}
+// ═══ MASTER UPDATE (single button) ═══
+async function masterUpdate(){
+  if(S.upd.running)return;
+  S.upd={running:true,step:0,done:[],steps:['Noticias macro+mercado','Noticias geopolíticas+oil+USD','Sentimiento social Reddit','⏳ Cooldown rate limit','Generando Plan IA completo']};
+  render();
 
-// SOCIAL via Claude web_search
-async function fetchSocial(){S.sL=true;render();
-const txt=await askClaude('Search Reddit and trading forums for recent opinions and predictions about gold XAUUSD. Find what traders are saying - are they bullish or bearish? Return ONLY a valid JSON array (no markdown, no backticks) of max 5 objects: [{"title":"short title","opinion":"1 sentence quote or summary","sentiment":"bullish"|"bearish"|"neutral","source":"Reddit/Forum name"}]',800,true);
-if(txt){try{const clean=txt.replace(/```json|```/g,'').trim();const arr=JSON.parse(clean);if(Array.isArray(arr))S.social=arr;}catch(e){console.warn('Social parse error:',e);}}
-S.sL=false;render();}
+  // Step 1: Market news
+  S.upd.step=0;render();
+  await new Promise(r=>{enqClaude('Search for the latest financial news affecting gold XAUUSD prices. Include: Fed decisions, inflation data, USD strength, bond yields, central bank gold purchases, ETF flows. Return ONLY valid JSON array (no markdown/backticks): [{"title":"string","impact":"positive"|"negative"|"neutral","summary":"1 sentence max","source":"string"}]. Max 8 items.',900,true,(txt,err)=>{if(txt){try{const a=JSON.parse(txt.replace(/```json|```/g,'').trim());if(Array.isArray(a))S.news=a;}catch{}}S.upd.done.push(0);render();r();});});
 
-// AI PLAN
-async function genPlan(){if(!AK||!S.gold)return;S.aiL=true;render();
-const sr=calcSR(S.candles),_rsi=calcRSI(S.candles),_macd=calcMACD(S.candles);
-const newsCtx=S.news.slice(0,4).map(n=>`[${n.impact}] ${n.title}`).join('\n');
-const socialCtx=S.social.slice(0,4).map(n=>`[${n.sentiment}] ${n.title}: ${n.opinion}`).join('\n');
-const prompt=`Eres analista experto XAUUSD. Genera plan de trading con TODOS estos datos:
+  // Step 2: Geopolitical news
+  S.upd.step=1;render();
+  await new Promise(r=>{enqClaude('Search for latest geopolitical news, wars, tariffs, oil prices, sanctions that could affect gold XAUUSD. Return ONLY valid JSON array (no markdown): [{"title":"string","impact":"positive"|"negative"|"neutral","summary":"1 sentence","source":"string"}]. Max 6 items.',800,true,(txt,err)=>{if(txt){try{const a=JSON.parse(txt.replace(/```json|```/g,'').trim());if(Array.isArray(a))S.news=[...S.news,...a];}catch{}}S.nI=S.news.reduce((a,n)=>a+(n.impact==='positive'?1:n.impact==='negative'?-1:0),0);S.upd.done.push(1);render();r();});});
 
-PRECIO: $${S.gold.toFixed(2)} | RSI: ${_rsi.toFixed(1)} | MACD: ${_macd.hist.toFixed(3)} | SMA20: ${sma(S.candles,20)?.toFixed(2)||'N/A'}
-SOPORTES: ${sr.S.map(s=>'$'+s.toFixed(2)).join(', ')}
-RESISTENCIAS: ${sr.R.map(r=>'$'+r.toFixed(2)).join(', ')}
-BTC: $${S.corr.btc?.toFixed(0)||'N/A'} | EUR/USD: ${S.corr.eur?.toFixed(4)||'N/A'}
+  // Step 3: Social sentiment
+  S.upd.step=2;render();
+  await new Promise(r=>{enqClaude('Search Reddit r/Daytrading, r/Forex, r/wallstreetbets and trading forums for recent opinions about gold XAUUSD. What are traders saying? Are they bullish or bearish? What rumors exist? Return ONLY valid JSON array (no markdown): [{"title":"short title","opinion":"quote or summary","sentiment":"bullish"|"bearish"|"neutral","source":"subreddit or forum","rumor":"any rumor mentioned or null"}]. Max 6 items.',800,true,(txt,err)=>{if(txt){try{const a=JSON.parse(txt.replace(/```json|```/g,'').trim());if(Array.isArray(a))S.social=a;}catch{}}S.upd.done.push(2);render();r();});});
 
-NOTICIAS:
-${newsCtx||'Sin datos recientes'}
+  // Step 4: Cooldown
+  S.upd.step=3;render();
+  await new Promise(r=>setTimeout(r,5000));
+  S.upd.done.push(3);render();
 
-SENTIMIENTO SOCIAL (Reddit/Foros):
-${socialCtx||'Sin datos'}
+  // Step 5: AI Plan with ALL context
+  S.upd.step=4;render();
+  const sr=calcSR(S.candles),_rsi=calcRSI(S.candles),_macd=calcMACD(S.candles);
+  const newsAll=S.news.map(n=>`[${n.impact}] ${n.title}: ${n.summary||''}`).join('\n');
+  const socialAll=S.social.map(n=>`[${n.sentiment}] ${n.title}: ${n.opinion}${n.rumor?' RUMOR:'+n.rumor:''}`).join('\n');
+  const tradeHist=S.bot.trades.slice(0,5).map(t=>`${t.type}@${fP(t.entry)}→${fP(t.exit)} PnL:${fS(t.pnl)} ${t.tag||''}`).join('\n');
+  
+  const planPrompt=`Eres el analista jefe de un fondo de trading de oro XAUUSD. Tu objetivo es maximizar ganancias con riesgo controlado. Genera un plan de trading detallado usando TODA esta información:
 
-RUMORES Y TENDENCIAS: Analiza qué rumores circulan basándote en el sentimiento social anterior.
+═══ DATOS TÉCNICOS ═══
+Precio actual: $${S.gold?.toFixed(2)||'N/A'}
+RSI(14): ${_rsi.toFixed(1)} | MACD histograma: ${_macd.hist.toFixed(3)}
+SMA20: ${sma(S.candles,20)?.toFixed(2)||'N/A'} | SMA50: ${sma(S.candles,Math.min(50,S.candles.length))?.toFixed(2)||'N/A'}
+Soportes: ${sr.S.map(s=>'$'+s.toFixed(2)).join(', ')}
+Resistencias: ${sr.R.map(r=>'$'+r.toFixed(2)).join(', ')}
+Timeframe actual: ${S.tf}
 
-CUENTA: $100, apalancamiento 500:1, lotes 0.01-0.02
+═══ MERCADOS CORRELACIONADOS ═══
+BTC/USD: $${S.corr.btc?.toFixed(0)||'N/A'} | EUR/USD: ${S.corr.eur?.toFixed(4)||'N/A'} | ETH/USD: $${S.corr.eth?.toFixed(0)||'N/A'}
+
+═══ NOTICIAS (${S.news.length} fuentes) ═══
+${newsAll||'Sin datos'}
+
+═══ SENTIMIENTO SOCIAL Y RUMORES ═══
+${socialAll||'Sin datos'}
+
+═══ CUENTA ═══
+Balance: $${S.bot.bal.toFixed(2)} | Lotes: ${getLots(S.bot.bal)} | Apalancamiento: 500:1
+Historial reciente:
+${tradeHist||'Sin trades previos'}
+Total: ${S.bot.tT} trades, ${S.bot.w}W/${S.bot.l}L, ${S.bot.resets} resets
+
+═══ REGLAS ═══
+- Solo operar cuando la probabilidad de éxito sea >70%
+- Risk:Reward mínimo 1:2
+- Considerar TODAS las noticias y rumores sociales
+- Si el mercado está cerrado (fin de semana), preparar plan para apertura del lunes
 
 Responde SOLO en JSON válido (sin backticks ni markdown):
-{"action":"COMPRA"|"VENTA"|"ESPERAR","confidence":0-100,"reasoning":"explicación español max 3 oraciones","entry":"precio o null","sl":"precio o null","tp":"precio o null","risk":"advertencia corta","newsImpact":"resumen impacto noticias 1 oración","socialSentiment":"resumen sentimiento social 1 oración","rumors":"rumores detectados 1 oración"}`;
-const txt=await askClaude(prompt,600);
-if(txt){try{S.aiPlan=JSON.parse(txt.replace(/```json|```/g,'').trim());}catch{S.aiPlan={action:'ERROR',reasoning:txt.slice(0,200)};}}
-S.aiL=false;render();}
+{"action":"COMPRA"|"VENTA"|"ESPERAR","confidence":0-100,"reasoning":"explicación detallada en español 3-5 oraciones","entry":"precio exacto o null","sl":"precio exacto o null","tp":"precio exacto o null","risk":"advertencia específica","newsImpact":"resumen de cómo las noticias afectan la decisión","socialSentiment":"resumen del sentimiento social y rumores","marketCondition":"descripción del estado actual del mercado","nextAction":"qué hacer si el precio sube/baja desde aquí"}`;
 
-// CHAT
+  await new Promise(r=>{enqClaude(planPrompt,800,false,(txt,err)=>{if(txt){try{S.aiPlan=JSON.parse(txt.replace(/```json|```/g,'').trim());}catch{S.aiPlan={action:'ERROR',reasoning:txt?.slice(0,300)||err||'Error parsing'};}}else{S.aiPlan={action:'ERROR',reasoning:err||'Error desconocido'};}S.upd.done.push(4);render();r();});});
+
+  S.upd.running=false;
+  // Update bot plan based on AI
+  if(S.aiPlan&&S.aiPlan.action!=='ERROR'){
+    S.bot.plan={action:S.aiPlan.action,conf:S.aiPlan.confidence||50,signals:{ai:S.aiPlan.action,news:S.nI>0?'Alcista':'Bajista'},score:S.aiPlan.confidence||0};
+    runBot(true); // Force bot to follow AI plan
+  }
+  render();
+}
+
+// ═══ BOT (follows AI Plan) ═══
+let lastBot=0;
+function runBot(forceAI=false){
+  if(!S.gold||S.candles.length<5)return;
+  if(!forceAI&&Date.now()-lastBot<30000)return;
+  lastBot=Date.now();
+  const p=S.gold,b=S.bot,sr=calcSR(S.candles);
+  const _rsi=calcRSI(S.candles);
+  
+  // If AI plan says act and confidence > 70, follow it
+  let act=b.plan.action||'ESPERAR';
+  let conf=b.plan.conf||0;
+
+  // Check SL/TP on existing position
+  if(b.pos){const pp=b.pos;
+    if((pp.type==='BUY'?p<=pp.sl:p>=pp.sl)||(pp.type==='BUY'?p>=pp.tp:p<=pp.tp)){
+      const pv=cPnL(pp.type,pp.entry,p,pp.lots);const tg=(pp.type==='BUY'?p>=pp.tp:p<=pp.tp)?'TP':'SL';
+      b.bal+=pv;b.trades.unshift({...pp,exit:p,pnl:pv,at:Date.now(),tag:tg,date:new Date().toISOString()});b.trades=b.trades.slice(0,100);
+      b.tT++;pv>0?b.w++:b.l++;b.pos=null;saveHistory();}}
+
+  // Close on reverse signal from AI
+  if(b.pos&&forceAI&&conf>=50&&((b.pos.type==='BUY'&&act==='VENTA')||(b.pos.type==='SELL'&&act==='COMPRA'))){
+    const pv=cPnL(b.pos.type,b.pos.entry,p,b.pos.lots);
+    b.bal+=pv;b.trades.unshift({...b.pos,exit:p,pnl:pv,at:Date.now(),date:new Date().toISOString()});b.trades=b.trades.slice(0,100);
+    b.tT++;pv>0?b.w++:b.l++;b.pos=null;saveHistory();}
+
+  // Open new position based on AI plan (only if confidence > 70)
+  if(!b.pos&&act!=='ESPERAR'&&conf>=70&&b.bal>10){
+    const lots=getLots(b.bal);const m=cMg(p,lots);
+    if(m<b.bal*0.8){
+      const type=act==='COMPRA'?'BUY':'SELL';
+      // Use AI-suggested SL/TP if available
+      let sl,tp;
+      if(S.aiPlan?.sl&&S.aiPlan.sl!=='null'){sl=parseFloat(S.aiPlan.sl);tp=parseFloat(S.aiPlan.tp);}
+      else{const slD=5+(100-conf)*0.03;sl=type==='BUY'?p-slD:p+slD;tp=type==='BUY'?p+slD*2:p-slD*2;}
+      b.pos={type,entry:p,lots,margin:m,sl,tp,at:Date.now()};
+      saveHistory();}}
+
+  // Update equity
+  if(b.pos){const ur=cPnL(b.pos.type,b.pos.entry,p,b.pos.lots);b.eq=b.bal+ur;b.ml=b.pos.margin>0?(b.eq/b.pos.margin)*100:0;
+    if(b.ml<=XM.so){b.bal=Math.max(0,b.bal+ur);b.trades.unshift({...b.pos,exit:p,pnl:ur,at:Date.now(),tag:'STOP OUT',date:new Date().toISOString()});b.trades=b.trades.slice(0,100);b.tT++;b.l++;b.pos=null;b.ml=0;b.resets++;saveHistory();}}
+  else{b.eq=b.bal;b.ml=0;}
+  if(b.bal<=1){b.bal=100;b.eq=100;b.pos=null;b.resets++;b.ml=0;saveHistory();}
+  render();
+}
+
+// ═══ CHAT ═══
 function toggleChat(){const p=document.getElementById('chatPanel');const f=document.getElementById('chatFab');const open=p.classList.toggle('open');f.style.display=open?'none':'flex';if(open)document.getElementById('chatIn').focus();}
 async function sendChat(){const inp=document.getElementById('chatIn');const msg=inp.value.trim();if(!msg||!AK)return;inp.value='';
-const sr=calcSR(S.candles),_rsi=calcRSI(S.candles),_macd=calcMACD(S.candles);
+const sr=calcSR(S.candles),_rsi=calcRSI(S.candles);
 S.chatHist.push({role:'user',content:msg});
 const el=document.getElementById('chatMsgs');
 el.innerHTML+=`<div class="chat-msg user">${msg}</div><div class="chat-msg ai" id="aiTyp" style="color:var(--dim);font-style:italic">Pensando...</div>`;el.scrollTop=el.scrollHeight;
-
-const ctx=`Contexto del dashboard Gold Trader XM de Leo:
-Precio: $${S.gold?.toFixed(2)||'N/A'} | RSI: ${_rsi.toFixed(1)} | MACD: ${_macd.hist.toFixed(3)} | SMA20: ${sma(S.candles,20)?.toFixed(2)||'N/A'}
-S: ${sr.S.map(s=>'$'+s.toFixed(2)).join(',')} | R: ${sr.R.map(r=>'$'+r.toFixed(2)).join(',')}
-BTC: $${S.corr.btc?.toFixed(0)||'N/A'} | EUR: ${S.corr.eur?.toFixed(4)||'N/A'} | ETH: $${S.corr.eth?.toFixed(0)||'N/A'}
-Bot: Bal $${S.bot.bal.toFixed(2)}, Eq $${S.bot.eq.toFixed(2)}, T:${S.bot.tT} W:${S.bot.w} L:${S.bot.l} R:${S.bot.resets}
-Pos: ${S.bot.pos?`${S.bot.pos.type} ${S.bot.pos.lots}L@$${S.bot.pos.entry.toFixed(2)}`:'Ninguna'}
-Plan: ${S.bot.plan.action} (Score:${S.bot.plan.score})
-News: ${S.news.slice(0,3).map(n=>`[${n.impact}]${n.title}`).join('|')||'N/A'}
-Social: ${S.social.slice(0,3).map(n=>`[${n.sentiment}]${n.title}`).join('|')||'N/A'}
-
-Responde en español, conciso, directo, con sarcasmo sutil cuando aplique. Puedes recomendar trades, analizar mercado, explicar todo.`;
-
-try{const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':AK,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:500,system:'Eres el asistente IA del dashboard Gold Trader. Español, conciso, directo.',messages:[{role:'user',content:ctx},...S.chatHist]})});
+const ctx=`Contexto Gold Trader de Leo:
+Precio:$${S.gold?.toFixed(2)||'?'} RSI:${_rsi.toFixed(1)} SMA20:${sma(S.candles,20)?.toFixed(2)||'?'}
+S:${sr.S.map(s=>'$'+s.toFixed(2))} R:${sr.R.map(r=>'$'+r.toFixed(2))}
+BTC:$${S.corr.btc?.toFixed(0)||'?'} EUR:${S.corr.eur?.toFixed(4)||'?'}
+Bot:Bal$${S.bot.bal.toFixed(2)} Eq$${S.bot.eq.toFixed(2)} T:${S.bot.tT} W:${S.bot.w} L:${S.bot.l}
+Pos:${S.bot.pos?`${S.bot.pos.type} ${S.bot.pos.lots}L@$${S.bot.pos.entry.toFixed(2)}`:'Ninguna'}
+Plan IA:${S.aiPlan?`${S.aiPlan.action} conf:${S.aiPlan.confidence}% - ${S.aiPlan.reasoning?.slice(0,100)}`:'No generado'}
+Lots actuales:${getLots(S.bot.bal)} Meta:$1M desde $100
+Noticias:${S.news.slice(0,3).map(n=>`[${n.impact}]${n.title}`).join('|')||'N/A'}
+Social:${S.social.slice(0,3).map(n=>`[${n.sentiment}]${n.title}`).join('|')||'N/A'}
+Responde en español, conciso, directo.`;
+try{const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json','x-api-key':AK,'anthropic-version':'2023-06-01','anthropic-dangerous-direct-browser-access':'true'},body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:400,system:'Asistente IA Gold Trader. Español, conciso, sarcasmo sutil.',messages:[{role:'user',content:ctx},...S.chatHist]})});
 const d=await r.json();const txt=d.content?.find(b=>b.type==='text')?.text||'Error';S.chatHist.push({role:'assistant',content:txt});
 document.getElementById('aiTyp').outerHTML=`<div class="chat-msg ai">${txt.replace(/\n/g,'<br>')}</div>`;}catch(e){document.getElementById('aiTyp').outerHTML=`<div class="chat-msg ai" style="color:var(--r)">Error: ${e.message}</div>`;}
 el.scrollTop=el.scrollHeight;}
 
-// BOT
-let lastBot=0;
-function runBot(){if(!S.gold||S.candles.length<10||Date.now()-lastBot<15000)return;lastBot=Date.now();
-const p=S.gold,d=S.candles,sr=calcSR(d),b=S.bot;
-const _rsi=calcRSI(d),_macd=calcMACD(d),_s20=sma(d,20),_s50=sma(d,Math.min(50,d.length));
-const dxy=S.corr.eur?(1/S.corr.eur-0.868)*100:0;
-let sc=0;const sig={};
-if(_rsi<30){sc+=25;sig.rsi=`Oversold(${_rsi.toFixed(0)})`;}else if(_rsi>70){sc-=25;sig.rsi=`Overbought(${_rsi.toFixed(0)})`;}else if(_rsi<40){sc+=10;sig.rsi=`Bajo(${_rsi.toFixed(0)})`;}else if(_rsi>60){sc-=10;sig.rsi=`Alto(${_rsi.toFixed(0)})`;}else sig.rsi=`Neutral(${_rsi.toFixed(0)})`;
-if(_macd.hist>0.2){sc+=15;sig.macd='+Compra';}else if(_macd.hist<-0.2){sc-=15;sig.macd='-Venta';}else sig.macd='Neutral';
-if(_s20&&_s50){if(_s20>_s50){sc+=12;sig.trend='Alcista';}else{sc-=12;sig.trend='Bajista';}}
-if(sr.S.some(s=>Math.abs(p-s)<5)){sc+=15;sig.sr='Soporte';}else if(sr.R.some(r=>Math.abs(p-r)<5)){sc-=15;sig.sr='Resistencia';}else sig.sr='Media';
-if(dxy>1){sc-=10;sig.dxy='USD↑';}else if(dxy<-1){sc+=10;sig.dxy='USD↓';}else sig.dxy='Estable';
-if(S.corr.btc)sig.btc=`$${(S.corr.btc/1000).toFixed(0)}K`;
-if(S.nI){sc+=S.nI*8;sig.news=S.nI>0?`Alcista(+${S.nI})`:`Bajista(${S.nI})`;}
-const bull=S.social.filter(s=>s.sentiment==='bullish').length,bear=S.social.filter(s=>s.sentiment==='bearish').length;
-if(bull>bear+1){sc+=8;sig.social=`Bull(${bull}/${S.social.length})`;}else if(bear>bull+1){sc-=8;sig.social=`Bear(${bear}/${S.social.length})`;}else if(S.social.length)sig.social=`Mix(B${bull}/S${bear})`;
-const conf=Math.min(100,Math.abs(sc));let act='ESPERAR';if(sc>=20)act='COMPRA';else if(sc<=-20)act='VENTA';
-b.plan={action:act,conf,signals:sig,score:sc};
-if(b.pos&&conf>=35&&((b.pos.type==='BUY'&&act==='VENTA')||(b.pos.type==='SELL'&&act==='COMPRA'))){const pv=cPnL(b.pos.type,b.pos.entry,p,b.pos.lots);b.bal+=pv;b.trades.unshift({...b.pos,exit:p,pnl:pv,at:Date.now()});b.trades=b.trades.slice(0,30);b.tT++;pv>0?b.w++:b.l++;b.pos=null;}
-if(b.pos){const pp=b.pos;if((pp.type==='BUY'?p<=pp.sl:p>=pp.sl)||(pp.type==='BUY'?p>=pp.tp:p<=pp.tp)){const pv=cPnL(pp.type,pp.entry,p,pp.lots);const tg=(pp.type==='BUY'?p>=pp.tp:p<=pp.tp)?'TP':'SL';b.bal+=pv;b.trades.unshift({...pp,exit:p,pnl:pv,at:Date.now(),tag:tg});b.trades=b.trades.slice(0,30);b.tT++;pv>0?b.w++:b.l++;b.pos=null;}}
-if(!b.pos&&conf>=30&&act!=='ESPERAR'&&b.bal>10){const lots=b.bal>60?0.02:0.01,m=cMg(p,lots);if(m<b.bal*0.8){const type=act==='COMPRA'?'BUY':'SELL',slD=4+(100-conf)*0.03;b.pos={type,entry:p,lots,margin:m,sl:type==='BUY'?p-slD:p+slD,tp:type==='BUY'?p+slD*2:p-slD*2,at:Date.now()};}}
-if(b.pos){const ur=cPnL(b.pos.type,b.pos.entry,p,b.pos.lots);b.eq=b.bal+ur;b.ml=b.pos.margin>0?(b.eq/b.pos.margin)*100:0;if(b.ml<=XM.so){b.bal=Math.max(0,b.bal+ur);b.trades.unshift({...b.pos,exit:p,pnl:ur,at:Date.now(),tag:'STOP OUT'});b.trades=b.trades.slice(0,30);b.tT++;b.l++;b.pos=null;b.ml=0;}}else{b.eq=b.bal;b.ml=0;}
-if(b.bal<=1||b.eq<=0){b.bal=100;b.eq=100;b.pos=null;b.resets++;b.ml=0;}}
-
-function rChart(d,sr,w,h){if(d.length<3)return'<div style="text-align:center;padding:30px;color:#2a3a52;font-size:10px">Cargando velas...</div>';const c=d.map(x=>x.c),all=[...c,...(sr?.S||[]),...(sr?.R||[])],mn=Math.min(...all)-1,mx=Math.max(...all)+1,rn=mx-mn||1;const y=v=>12+((mx-v)/rn)*(h-24),x=i=>6+(i/(c.length-1))*(w-12);const line=c.map((v,i)=>`${i===0?'M':'L'}${x(i)},${y(v)}`).join(' ');const area=`${line} L${x(c.length-1)},${h-12} L${x(0)},${h-12} Z`;const up=c[c.length-1]>=c[0],col=up?'var(--g)':'var(--r)';let s=`<svg width="${w}" height="${h}" style="display:block"><defs><linearGradient id="cg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="${col}" stop-opacity="0.18"/><stop offset="100%" stop-color="${col}" stop-opacity="0"/></linearGradient></defs><path d="${area}" fill="url(#cg)"/><path d="${line}" fill="none" stroke="${col}" stroke-width="1.5"/>`;(sr?.S||[]).forEach((v,i)=>{s+=`<line x1="6" y1="${y(v)}" x2="${w-6}" y2="${y(v)}" stroke="var(--g)" stroke-width="0.5" stroke-dasharray="3,3" opacity="0.4"/><text x="${w-4}" y="${y(v)-2}" fill="var(--g)" font-size="6" text-anchor="end">S${i+1}</text>`;});(sr?.R||[]).forEach((v,i)=>{s+=`<line x1="6" y1="${y(v)}" x2="${w-6}" y2="${y(v)}" stroke="var(--r)" stroke-width="0.5" stroke-dasharray="3,3" opacity="0.4"/><text x="${w-4}" y="${y(v)-2}" fill="var(--r)" font-size="6" text-anchor="end">R${i+1}</text>`;});s+=`<circle cx="${x(c.length-1)}" cy="${y(c[c.length-1])}" r="3" fill="${col}"><animate attributeName="r" values="3;5;3" dur="2s" repeatCount="indefinite"/></circle><text x="${x(c.length-1)-3}" y="${y(c[c.length-1])-5}" fill="${col}" font-size="7" font-weight="700" text-anchor="end">${fP(c[c.length-1])}</text></svg>`;return s;}
-function gauge(v,lb,mn=0,mx=100){const p=Math.max(0,Math.min(1,(v-mn)/(mx-mn)));const c=p<0.3?'var(--r)':p<0.6?'var(--y)':'var(--g)';return`<div style="text-align:center"><svg width="58" height="34" viewBox="0 0 58 34"><path d="M 5 30 A 22 22 0 0 1 53 30" fill="none" stroke="#1a2332" stroke-width="4" stroke-linecap="round"/><path d="M 5 30 A 22 22 0 0 1 53 30" fill="none" stroke="${c}" stroke-width="4" stroke-linecap="round" stroke-dasharray="${p*69} 69"/></svg><div style="font-size:7px;color:var(--dim);margin-top:-2px">${lb}</div><div style="font-size:11px;font-weight:700;color:${c}">${v?.toFixed(0)}</div></div>`;}
+// ═══ RENDER ═══
+function rChart(d,sr,w,h){if(d.length<3)return'<div style="text-align:center;padding:25px;color:#2a3a52;font-size:10px">Cargando...</div>';const c=d.map(x=>x.c),all=[...c,...(sr?.S||[]),...(sr?.R||[])],mn=Math.min(...all)-1,mx=Math.max(...all)+1,rn=mx-mn||1;const y=v=>10+((mx-v)/rn)*(h-20),x=i=>6+(i/(c.length-1))*(w-12);const line=c.map((v,i)=>`${i===0?'M':'L'}${x(i)},${y(v)}`).join(' ');const area=`${line} L${x(c.length-1)},${h-10} L${x(0)},${h-10} Z`;const up=c[c.length-1]>=c[0],col=up?'var(--g)':'var(--r)';let s=`<svg width="${w}" height="${h}" style="display:block"><defs><linearGradient id="cg" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="${col}" stop-opacity="0.15"/><stop offset="100%" stop-color="${col}" stop-opacity="0"/></linearGradient></defs><path d="${area}" fill="url(#cg)"/><path d="${line}" fill="none" stroke="${col}" stroke-width="1.5"/>`;(sr?.S||[]).forEach((v,i)=>{s+=`<line x1="6" y1="${y(v)}" x2="${w-6}" y2="${y(v)}" stroke="var(--g)" stroke-width="0.5" stroke-dasharray="3,3" opacity="0.4"/><text x="${w-4}" y="${y(v)-2}" fill="var(--g)" font-size="6" text-anchor="end">S${i+1}</text>`;});(sr?.R||[]).forEach((v,i)=>{s+=`<line x1="6" y1="${y(v)}" x2="${w-6}" y2="${y(v)}" stroke="var(--r)" stroke-width="0.5" stroke-dasharray="3,3" opacity="0.4"/><text x="${w-4}" y="${y(v)-2}" fill="var(--r)" font-size="6" text-anchor="end">R${i+1}</text>`;});s+=`<circle cx="${x(c.length-1)}" cy="${y(c[c.length-1])}" r="3" fill="${col}"><animate attributeName="r" values="3;5;3" dur="2s" repeatCount="indefinite"/></circle><text x="${x(c.length-1)-3}" y="${y(c[c.length-1])-5}" fill="${col}" font-size="7" font-weight="700" text-anchor="end">${fP(c[c.length-1])}</text></svg>`;return s;}
+function gauge(v,lb,mn=0,mx=100){const p=Math.max(0,Math.min(1,(v-mn)/(mx-mn)));const c=p<0.3?'var(--r)':p<0.6?'var(--y)':'var(--g)';return`<div style="text-align:center"><svg width="56" height="32" viewBox="0 0 56 32"><path d="M 4 28 A 20 20 0 0 1 52 28" fill="none" stroke="#1a2332" stroke-width="4" stroke-linecap="round"/><path d="M 4 28 A 20 20 0 0 1 52 28" fill="none" stroke="${c}" stroke-width="4" stroke-linecap="round" stroke-dasharray="${p*63} 63"/></svg><div style="font-size:6px;color:var(--dim);margin-top:-2px">${lb}</div><div style="font-size:10px;font-weight:700;color:${c}">${v?.toFixed(0)}</div></div>`;}
 
 function render(){try{
 const g=S.gold,q=S.q,b=S.bot,d=S.candles,sr=calcSR(d),_rsi=calcRSI(d),_macd=calcMACD(d),_s20=sma(d,20);
@@ -215,51 +254,66 @@ const sc=S.status==='live'?'var(--g)':'var(--y)';
 document.getElementById('sDot').style.background=sc;document.getElementById('sTxt').style.color=sc;document.getElementById('sTxt').textContent=S.status==='live'?'LIVE':'...';
 document.getElementById('pM').textContent=g?fP(g):'...';
 document.getElementById('pC').innerHTML=q?`<span style="color:${q.ch>=0?'var(--g)':'var(--r)'}">${q.ch>=0?'+':''}${q.ch?.toFixed(2)}(${q.chp?.toFixed(2)}%)</span>`:'';
-let ind=`<span>RSI <b style="color:${_rsi>70?'var(--r)':_rsi<30?'var(--g)':'var(--y)'}">${_rsi.toFixed(0)}</b></span><span>SMA <b style="color:var(--b)">${_s20?.toFixed(0)||'—'}</b></span>`;
+let ind=`<span>RSI <b style="color:${_rsi>70?'var(--r)':_rsi<30?'var(--g)':'var(--y)'}">${_rsi.toFixed(0)}</b></span>`;
 if(S.corr.btc)ind+=`<span>BTC <b style="color:var(--y)">$${(S.corr.btc/1000).toFixed(1)}K</b></span>`;
 ind+=`<span>Eq <b style="color:${b.eq>=b.bal?'var(--g)':'var(--r)'}">${fmt(b.eq)}</b></span>`;
+ind+=`<span>Lots <b style="color:var(--p)">${getLots(b.bal)}</b></span>`;
 document.getElementById('ind').innerHTML=ind;
 document.querySelectorAll('.tbn').forEach((btn,i)=>btn.classList.toggle('a',['chart','plan','bot','news'][i]===S.tab));
 const cw=Math.min(window.innerWidth-16,430);let h='';
 
+// UPDATE STATUS BAR (shows on all tabs when running)
+if(S.upd.running){h+=`<div class="upd-status"><div class="lb" style="margin-bottom:4px">🔄 ACTUALIZANDO...</div>`;
+S.upd.steps.forEach((step,i)=>{const cls=S.upd.done.includes(i)?'upd-done':i===S.upd.step?'upd-active':'upd-wait';h+=`<div class="upd-step"><div class="upd-dot ${cls}"></div><span style="color:${S.upd.done.includes(i)?'var(--g)':i===S.upd.step?'var(--y)':'var(--dim)'}">${step}</span></div>`;});h+=`</div>`;}
+
 if(S.tab==='chart'){
-h+=`<div class="cd">${rChart(d,sr,cw-36,160)}</div>`;
-h+=`<div class="cd"><div class="lb" style="margin-bottom:4px">S & R</div><div style="display:flex;gap:6px"><div style="flex:1">`;sr.S.forEach((s,i)=>{h+=`<div class="sr"><span style="color:var(--g)">S${i+1}</span><b style="color:var(--g)">${fP(s)}</b></div>`;});h+=`</div><div style="width:1px;background:var(--bdr)"></div><div style="flex:1">`;sr.R.forEach((r,i)=>{h+=`<div class="sr"><span style="color:var(--r)">R${i+1}</span><b style="color:var(--r)">${fP(r)}</b></div>`;});h+=`</div></div></div>`;
-if(q){h+=`<div class="cd"><div class="lb" style="margin-bottom:3px">SESIÓN</div><div class="g4" style="font-size:8px;text-align:center"><div><span style="color:var(--dim)">Open</span><br><b>${fP(q.open)}</b></div><div><span style="color:var(--dim)">High</span><br><b style="color:var(--g)">${fP(q.high)}</b></div><div><span style="color:var(--dim)">Low</span><br><b style="color:var(--r)">${fP(q.low)}</b></div><div><span style="color:var(--dim)">Prev</span><br><b>${fP(q.prev)}</b></div></div>`;if(q.w52l)h+=`<div style="margin-top:3px;font-size:7px;color:var(--dim);text-align:center">52w: ${fP(q.w52l)} — ${fP(q.w52h)}</div>`;h+=`</div>`;}
-h+=`<div class="cd"><div style="display:flex;justify-content:space-around">${gauge(_rsi,'RSI')}${gauge(S.fear,'Fear/Greed')}${gauge(b.ml||100,'Margin%',0,500)}</div></div>`;}
+h+=`<div class="cd">${rChart(d,sr,cw-36,155)}</div>`;
+h+=`<div class="cd"><div class="lb" style="margin-bottom:3px">S & R</div><div style="display:flex;gap:6px"><div style="flex:1">`;sr.S.forEach((s,i)=>{h+=`<div class="sr"><span style="color:var(--g)">S${i+1}</span><b style="color:var(--g)">${fP(s)}</b></div>`;});h+=`</div><div style="width:1px;background:var(--bdr)"></div><div style="flex:1">`;sr.R.forEach((r,i)=>{h+=`<div class="sr"><span style="color:var(--r)">R${i+1}</span><b style="color:var(--r)">${fP(r)}</b></div>`;});h+=`</div></div></div>`;
+if(q){h+=`<div class="cd"><div class="g4" style="font-size:8px;text-align:center"><div><span style="color:var(--dim)">Open</span><br><b>${fP(q.open)}</b></div><div><span style="color:var(--dim)">High</span><br><b style="color:var(--g)">${fP(q.high)}</b></div><div><span style="color:var(--dim)">Low</span><br><b style="color:var(--r)">${fP(q.low)}</b></div><div><span style="color:var(--dim)">52wH</span><br><b>${fP(q.w52h)}</b></div></div></div>`;}
+h+=`<div class="cd"><div style="display:flex;justify-content:space-around">${gauge(_rsi,'RSI')}${gauge(S.fear,'Fear/Greed')}${gauge(b.ml||100,'Margin%',0,500)}</div></div>`;
+h+=`<button class="rbtn big" onclick="masterUpdate()" ${S.upd.running?'disabled':''} style="margin-top:4px">${S.upd.running?'Actualizando...':'🔄 Actualizar Todo (Noticias → Social → Plan IA)'}</button>`;}
 
 if(S.tab==='plan'){
-const bc=b.plan.action==='COMPRA'?'#14532d':b.plan.action==='VENTA'?'#7f1d1d':'var(--bdr)';
-h+=`<div class="cd" style="border-color:${bc}"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px"><span class="lb">ANÁLISIS TÉCNICO</span>${bd(b.plan.action==='COMPRA'?'g':b.plan.action==='VENTA'?'r':'y',(b.plan.action==='COMPRA'?'🟢':b.plan.action==='VENTA'?'🔴':'🟡')+' '+b.plan.action)}</div><div style="margin-bottom:5px"><div style="display:flex;justify-content:space-between;margin-bottom:2px"><span style="font-size:9px;color:var(--dim)">Confianza</span><span style="font-size:10px;font-weight:700;color:${b.plan.conf>60?'var(--g)':'var(--y)'}">${b.plan.conf}%</span></div><div class="pb"><div class="pf" style="width:${b.plan.conf}%;background:${b.plan.conf>60?'var(--g)':'var(--y)'}"></div></div></div><div style="font-size:9px;color:#64748b">Score: <b style="color:${b.plan.score>0?'var(--g)':b.plan.score<0?'var(--r)':'var(--y)'}">${b.plan.score}</b></div></div>`;
-h+=`<div class="cd"><div class="lb" style="margin-bottom:4px">SEÑALES</div>`;Object.entries(b.plan.signals).forEach(([k,v])=>{const c=String(v).match(/Compra|Alcista|Oversold|Soporte|Bull|↓/)?'var(--g)':String(v).match(/Venta|Bajista|Overbought|Resistencia|Bear|↑/)?'var(--r)':'#94a3b8';h+=`<div class="sig"><span style="color:var(--dim);text-transform:uppercase;font-size:7px;font-weight:600">${k}</span><span style="color:${c};max-width:70%;text-align:right;font-size:8px">${v}</span></div>`;});h+=`</div>`;
-h+=`<div class="cd"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px"><span class="lb">🧠 PLAN IA</span><button class="rbtn" onclick="genPlan()" ${S.aiL?'disabled':''}>${S.aiL?'Analizando...':'Generar Plan'}</button></div>`;
-if(S.aiPlan){const ap=S.aiPlan;h+=`<div style="margin-bottom:4px">${bd(ap.action==='COMPRA'?'g':ap.action==='VENTA'?'r':'y',ap.action)} <span style="font-size:9px;color:var(--dim)">Conf: ${ap.confidence||'?'}%</span></div><div style="font-size:9px;color:var(--txt);line-height:1.4;margin-bottom:4px">${ap.reasoning||''}</div>`;if(ap.entry&&ap.entry!=='null')h+=`<div style="font-size:8px;color:var(--dim)">Entry: <b>${ap.entry}</b> · SL: <b style="color:var(--r)">${ap.sl}</b> · TP: <b style="color:var(--g)">${ap.tp}</b></div>`;if(ap.newsImpact)h+=`<div style="font-size:8px;color:var(--b);margin-top:3px">📰 ${ap.newsImpact}</div>`;if(ap.socialSentiment)h+=`<div style="font-size:8px;color:var(--p);margin-top:2px">💬 ${ap.socialSentiment}</div>`;if(ap.rumors)h+=`<div style="font-size:8px;color:var(--y);margin-top:2px">🔮 ${ap.rumors}</div>`;if(ap.risk)h+=`<div style="font-size:8px;color:var(--r);margin-top:3px">⚠️ ${ap.risk}</div>`;}else h+=`<div style="font-size:9px;color:#2a3a52;text-align:center;padding:6px">Presiona "Generar Plan"</div>`;h+=`</div>`;
+h+=`<button class="rbtn big" onclick="masterUpdate()" ${S.upd.running?'disabled':''} style="margin-bottom:8px">${S.upd.running?'Actualizando...':'🔄 Actualizar Todo'}</button>`;
+if(S.aiPlan&&S.aiPlan.action!=='ERROR'){const ap=S.aiPlan;
+h+=`<div class="cd" style="border-color:${ap.action==='COMPRA'?'#14532d':ap.action==='VENTA'?'#7f1d1d':'var(--bdr)'}"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px"><span class="lb">🧠 PLAN IA</span>${bd(ap.action==='COMPRA'?'g':ap.action==='VENTA'?'r':'y',ap.action+' '+( ap.confidence||'?')+'%')}</div>`;
+h+=`<div style="font-size:9px;color:var(--txt);line-height:1.5;margin-bottom:6px">${ap.reasoning||''}</div>`;
+if(ap.entry&&ap.entry!=='null')h+=`<div style="font-size:8px;color:var(--dim);margin-bottom:4px">Entry: <b>${ap.entry}</b> · SL: <b style="color:var(--r)">${ap.sl}</b> · TP: <b style="color:var(--g)">${ap.tp}</b></div>`;
+if(ap.marketCondition)h+=`<div style="font-size:8px;color:var(--b);margin-bottom:3px">📊 ${ap.marketCondition}</div>`;
+if(ap.newsImpact)h+=`<div style="font-size:8px;color:var(--g);margin-bottom:3px">📰 ${ap.newsImpact}</div>`;
+if(ap.socialSentiment)h+=`<div style="font-size:8px;color:var(--p);margin-bottom:3px">💬 ${ap.socialSentiment}</div>`;
+if(ap.rumors)h+=`<div style="font-size:8px;color:var(--y);margin-bottom:3px">🔮 ${ap.rumors}</div>`;
+if(ap.nextAction)h+=`<div style="font-size:8px;color:var(--dim);margin-bottom:3px">➡️ ${ap.nextAction}</div>`;
+if(ap.risk)h+=`<div style="font-size:8px;color:var(--r);margin-top:3px">⚠️ ${ap.risk}</div>`;
+h+=`</div>`;}else if(S.aiPlan?.action==='ERROR'){h+=`<div class="cd" style="border-color:#7f1d1d"><div style="font-size:9px;color:var(--r)">${S.aiPlan.reasoning}</div></div>`;}
+else{h+=`<div class="cd" style="text-align:center;color:#2a3a52;padding:16px;font-size:10px">Presiona "Actualizar Todo" para generar el plan</div>`;}
 h+=`<div class="cd"><div class="lb" style="margin-bottom:4px">MERCADOS</div><div class="g3">`;[{l:'BTC',v:S.corr.btc?`$${(S.corr.btc/1000).toFixed(1)}K`:'—',c:'var(--y)'},{l:'EUR/USD',v:S.corr.eur?.toFixed(4)||'—',c:'var(--p)'},{l:'ETH',v:S.corr.eth?`$${S.corr.eth.toFixed(0)}`:'—',c:'var(--b)'}].forEach(m=>{h+=`<div class="cb"><div style="font-size:6px;color:var(--dim)">${m.l}</div><div style="font-size:11px;font-weight:700;color:${m.c}">${m.v}</div></div>`;});h+=`</div></div>`;}
 
 if(S.tab==='bot'){
-h+=`<div class="cd" style="background:linear-gradient(135deg,#0a1020,#0d1420)"><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span class="lb">PAPER TRADING · XM</span>${bd('g','AUTO')}</div><div class="g2" style="margin-bottom:4px"><div><div style="font-size:7px;color:var(--dim)">Balance</div><div style="font-size:16px;font-weight:800;color:var(--br)">${fmt(b.bal)}</div></div><div><div style="font-size:7px;color:var(--dim)">Equity</div><div style="font-size:16px;font-weight:800;color:${b.eq>=b.bal?'var(--g)':'var(--r)'}">${fmt(b.eq)}</div></div></div><div style="display:flex;gap:5px;font-size:8px;flex-wrap:wrap"><span>T:<b>${b.tT}</b></span><span style="color:var(--g)">W:<b>${b.w}</b></span><span style="color:var(--r)">L:<b>${b.l}</b></span><span style="color:var(--y)">R:<b>${b.resets}</b></span>${b.tT>0?`<span>WR:<b style="color:var(--b)">${((b.w/b.tT)*100).toFixed(0)}%</b></span>`:''}</div>${b.ml>0?`<div style="margin-top:2px;font-size:8px">Mg:<b style="color:${b.ml<100?'var(--r)':b.ml<200?'var(--y)':'var(--g)'}">${b.ml.toFixed(0)}%</b></div>`:''}</div>`;
+h+=`<div class="cd" style="background:linear-gradient(135deg,#0a1020,#0d1420)"><div style="display:flex;justify-content:space-between;margin-bottom:4px"><span class="lb">PAPER TRADING · XM</span>${bd('g','AUTO · '+getLots(b.bal)+'L')}</div><div class="g2" style="margin-bottom:4px"><div><div style="font-size:7px;color:var(--dim)">Balance</div><div style="font-size:16px;font-weight:800;color:var(--br)">${fmt(b.bal)}</div></div><div><div style="font-size:7px;color:var(--dim)">Equity</div><div style="font-size:16px;font-weight:800;color:${b.eq>=b.bal?'var(--g)':'var(--r)'}">${fmt(b.eq)}</div></div></div><div style="display:flex;gap:5px;font-size:8px;flex-wrap:wrap"><span>T:<b>${b.tT}</b></span><span style="color:var(--g)">W:<b>${b.w}</b></span><span style="color:var(--r)">L:<b>${b.l}</b></span>${b.tT>0?`<span>WR:<b style="color:var(--b)">${((b.w/b.tT)*100).toFixed(0)}%</b></span>`:''}<span>Meta:<b style="color:var(--p)">$1M</b></span></div></div>`;
 if(b.pos){h+=`<div class="cd" style="border-color:${b.pos.type==='BUY'?'#14532d':'#7f1d1d'}"><div style="display:flex;justify-content:space-between;margin-bottom:3px">${bd(b.pos.type==='BUY'?'g':'r',(b.pos.type==='BUY'?'🟢LONG':'🔴SHORT')+' '+b.pos.lots+'L')}<span style="font-size:8px;color:var(--dim)">Mg:${fmt(b.pos.margin)}</span></div><div class="g3" style="font-size:8px"><div><span style="color:var(--dim)">Entry</span><br><b>${fP(b.pos.entry)}</b></div><div><span style="color:var(--g)">TP</span><br><b style="color:var(--g)">${fP(b.pos.tp)}</b></div><div><span style="color:var(--r)">SL</span><br><b style="color:var(--r)">${fP(b.pos.sl)}</b></div></div>${g?`<div style="margin-top:3px;font-size:10px">P&L:<b style="color:${cPnL(b.pos.type,b.pos.entry,g,b.pos.lots)>=0?'var(--g)':'var(--r)'}">${fS(cPnL(b.pos.type,b.pos.entry,g,b.pos.lots))}</b></div>`:''}</div>`;}
-h+=`<div class="cd"><div class="lb" style="margin-bottom:3px">HISTORIAL</div>`;if(!b.trades.length)h+=`<div style="text-align:center;color:#2a3a52;padding:8px;font-size:9px">Esperando...</div>`;b.trades.forEach(t=>{h+=`<div class="tr"><div style="display:flex;gap:2px">${bd(t.type==='BUY'?'g':'r',t.type)}${t.tag?bd(t.tag==='TP'?'g':'r',t.tag):''}</div><span style="color:var(--dim)">${fP(t.entry)}→${fP(t.exit)}</span><span style="font-weight:700;color:${t.pnl>=0?'var(--g)':'var(--r)'}">${fS(t.pnl)}</span></div>`;});h+=`</div>`;}
+h+=`<div class="cd"><div class="lb" style="margin-bottom:3px">HISTORIAL (persistente)</div>`;
+if(!b.trades.length)h+=`<div style="text-align:center;color:#2a3a52;padding:8px;font-size:9px">Esperando...</div>`;
+b.trades.slice(0,20).forEach(t=>{h+=`<div class="tr"><div style="display:flex;gap:2px">${bd(t.type==='BUY'?'g':'r',t.type)}${t.tag?bd(t.tag==='TP'?'g':'r',t.tag):''}</div><span style="color:var(--dim)">${t.lots||'?'}L ${fP(t.entry)}→${fP(t.exit)}</span><span style="font-weight:700;color:${t.pnl>=0?'var(--g)':'var(--r)'}">${fS(t.pnl)}</span></div>`;});
+h+=`</div>`;}
 
 if(S.tab==='news'){
-h+=`<div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px"><span class="lb">📰 NOTICIAS</span><button class="rbtn" onclick="fetchNews()" ${S.nL?'disabled':''}>${S.nL?'Buscando...':'🔄 Noticias'}</button></div>`;
-h+=`<div class="cd" style="background:#0a1020"><div style="display:flex;justify-content:space-between"><span style="font-size:8px;color:var(--dim)">Impacto neto</span>${bd(S.nI>0?'g':S.nI<0?'r':'y',(S.nI>0?'↑ALCISTA':S.nI<0?'↓BAJISTA':'→NEUTRO')+`(${S.nI})`)}</div></div>`;
-if(!S.news.length&&!S.nL)h+=`<div class="cd" style="text-align:center;color:#2a3a52;font-size:9px">Presiona 🔄 Noticias</div>`;
+h+=`<button class="rbtn big" onclick="masterUpdate()" ${S.upd.running?'disabled':''} style="margin-bottom:8px">${S.upd.running?'Actualizando...':'🔄 Actualizar Todo'}</button>`;
+h+=`<div class="cd" style="background:#0a1020"><div style="display:flex;justify-content:space-between"><span style="font-size:8px;color:var(--dim)">Noticias: ${S.news.length} | Impacto neto</span>${bd(S.nI>0?'g':S.nI<0?'r':'y',(S.nI>0?'↑ALCISTA':S.nI<0?'↓BAJISTA':'→NEUTRO')+`(${S.nI})`)}</div></div>`;
+if(!S.news.length)h+=`<div class="cd" style="text-align:center;color:#2a3a52;font-size:9px">Presiona Actualizar Todo</div>`;
 S.news.forEach(n=>{h+=`<div class="cd"><div style="display:flex;justify-content:space-between;margin-bottom:2px">${bd(n.impact==='positive'?'g':n.impact==='negative'?'r':'',n.impact==='positive'?'↑':n.impact==='negative'?'↓':'→')}<span style="font-size:6px;color:#2a3a52">${n.source||''}</span></div><div style="font-size:9px;font-weight:600;color:#e2e8f0;margin-bottom:1px">${n.title}</div><div style="font-size:8px;color:#64748b;line-height:1.3">${n.summary||''}</div></div>`;});
+// Social
+const bull=S.social.filter(s=>s.sentiment==='bullish').length,bear=S.social.filter(s=>s.sentiment==='bearish').length;
+h+=`<div class="lb" style="margin:8px 0 4px">💬 SENTIMIENTO SOCIAL (${S.social.length})</div>`;
+if(S.social.length){h+=`<div class="cd" style="background:#0a1020"><div class="g3" style="text-align:center"><div><div style="font-size:7px;color:var(--dim)">Bull</div><div style="font-size:13px;font-weight:700;color:var(--g)">${bull}</div></div><div><div style="font-size:7px;color:var(--dim)">Neutral</div><div style="font-size:13px;font-weight:700;color:#94a3b8">${S.social.length-bull-bear}</div></div><div><div style="font-size:7px;color:var(--dim)">Bear</div><div style="font-size:13px;font-weight:700;color:var(--r)">${bear}</div></div></div></div>`;}
+S.social.forEach(n=>{h+=`<div class="cd"><div style="display:flex;justify-content:space-between;margin-bottom:2px">${bd(n.sentiment==='bullish'?'g':n.sentiment==='bearish'?'r':'','🗣'+n.sentiment?.toUpperCase())}<span style="font-size:6px;color:#2a3a52">${n.source||''}</span></div><div style="font-size:9px;font-weight:600;color:#e2e8f0;margin-bottom:1px">${n.title||''}</div><div style="font-size:8px;color:#64748b;line-height:1.3">${n.opinion||''}</div>${n.rumor?`<div style="font-size:7px;color:var(--y);margin-top:2px">🔮 Rumor: ${n.rumor}</div>`:''}</div>`;});}
 
-h+=`<div style="display:flex;justify-content:space-between;align-items:center;margin:8px 0 4px"><span class="lb">💬 SENTIMIENTO SOCIAL</span><button class="rbtn" onclick="fetchSocial()" ${S.sL?'disabled':''}>${S.sL?'Buscando...':'🔄 Social'}</button></div>`;
-const bull=S.social.filter(s=>s.sentiment==='bullish').length,bear=S.social.filter(s=>s.sentiment==='bearish').length,neut=S.social.filter(s=>s.sentiment==='neutral').length;
-if(S.social.length){h+=`<div class="cd" style="background:#0a1020"><div class="g3" style="text-align:center"><div><div style="font-size:7px;color:var(--dim)">Bullish</div><div style="font-size:13px;font-weight:700;color:var(--g)">${bull}</div></div><div><div style="font-size:7px;color:var(--dim)">Neutral</div><div style="font-size:13px;font-weight:700;color:#94a3b8">${neut}</div></div><div><div style="font-size:7px;color:var(--dim)">Bearish</div><div style="font-size:13px;font-weight:700;color:var(--r)">${bear}</div></div></div></div>`;}
-if(!S.social.length&&!S.sL)h+=`<div class="cd" style="text-align:center;color:#2a3a52;font-size:9px">Presiona 🔄 Social</div>`;
-S.social.forEach(n=>{h+=`<div class="cd"><div style="display:flex;justify-content:space-between;margin-bottom:2px">${bd(n.sentiment==='bullish'?'g':n.sentiment==='bearish'?'r':'','🗣'+n.sentiment?.toUpperCase())}<span style="font-size:6px;color:#2a3a52">${n.source||''}</span></div><div style="font-size:9px;font-weight:600;color:#e2e8f0;margin-bottom:1px">${n.title||''}</div><div style="font-size:8px;color:#64748b;line-height:1.3">${n.opinion||''}</div></div>`;});}
-
-if(S.errors.length){h+=`<div class="err">Errores: ${S.errors.slice(-2).join(' | ')}</div>`;S.errors=[];}
-document.getElementById('cnt').innerHTML=h;}catch(e){console.error('Render error:',e);}}
+document.getElementById('cnt').innerHTML=h;}catch(e){console.error('Render:',e);}}
 
 function setTab(t){S.tab=t;render();}
-function setTF(t){S.tf=t;document.querySelectorAll('.tf').forEach(b=>{b.classList.toggle('a',b.textContent.toLowerCase().replace(' ','')===(t==='15min'?'15m':t));});ldCandles();}
+function setTF(t){S.tf=t;document.querySelectorAll('.tf').forEach(b=>{const v=b.textContent.toLowerCase().replace(' ','');b.classList.toggle('a',v===(t==='15min'?'15m':t==='1day'?'1d':t));});ldCandles();}
 
-async function init(){try{await ldQuote();await ldCandles();refP();setInterval(refP,35000);setInterval(()=>{S.fear=Math.max(5,Math.min(95,S.fear+(Math.random()-0.5)*2.5));},20000);render();}catch(e){console.error('Init error:',e);}}
+async function init(){loadHistory();try{await ldQuote();await ldCandles();refP();setInterval(refP,35000);setInterval(()=>{S.fear=Math.max(5,Math.min(95,S.fear+(Math.random()-0.5)*2));},25000);}catch(e){console.error('Init:',e);}render();}
 ldCfg();
 </script>
 </body>
