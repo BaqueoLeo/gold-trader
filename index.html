@@ -159,13 +159,15 @@ ${tradeHist||'Sin trades previos'}
 Total: ${S.bot.tT} trades, ${S.bot.w}W/${S.bot.l}L, ${S.bot.resets} resets
 
 ═══ REGLAS ═══
+- SIEMPRE proporciona entry, sl y tp con precios EXACTOS numéricos (nunca null)
 - Solo operar cuando la probabilidad de éxito sea >70%
 - Risk:Reward mínimo 1:2
 - Considerar TODAS las noticias y rumores sociales
-- Si el mercado está cerrado (fin de semana), preparar plan para apertura del lunes
+- Si el mercado está cerrado, preparar plan para apertura del lunes con entry/sl/tp concretos
+- Incluso si la acción es ESPERAR, indica el entry ideal, sl y tp para cuando se active la señal
 
 Responde SOLO en JSON válido (sin backticks ni markdown):
-{"action":"COMPRA"|"VENTA"|"ESPERAR","confidence":0-100,"reasoning":"explicación detallada en español 3-5 oraciones","entry":"precio exacto o null","sl":"precio exacto o null","tp":"precio exacto o null","risk":"advertencia específica","newsImpact":"resumen de cómo las noticias afectan la decisión","socialSentiment":"resumen del sentimiento social y rumores","marketCondition":"descripción del estado actual del mercado","nextAction":"qué hacer si el precio sube/baja desde aquí"}`;
+{"action":"COMPRA"|"VENTA"|"ESPERAR","confidence":0-100,"reasoning":"explicación detallada en español 3-5 oraciones","entry":"PRECIO NUMÉRICO EXACTO siempre","sl":"PRECIO NUMÉRICO EXACTO siempre","tp":"PRECIO NUMÉRICO EXACTO siempre","risk":"advertencia específica","newsImpact":"resumen de cómo las noticias afectan la decisión","socialSentiment":"resumen del sentimiento social y rumores","marketCondition":"descripción del estado actual del mercado","nextAction":"qué hacer si el precio sube/baja desde aquí"}`;
 
   {const{txt,err}=await callClaude(planPrompt,800,false);
   if(txt){try{S.aiPlan=JSON.parse(txt.replace(/```json|```/g,'').trim());}catch{S.aiPlan={action:'ERROR',reasoning:txt?.slice(0,300)||'Error parsing'};}}
