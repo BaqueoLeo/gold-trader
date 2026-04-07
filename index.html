@@ -365,7 +365,7 @@ function R(){try{
   if(tab==='plan'){
     h+=ubtn;
     if(aiPlan&&aiPlan.action!=='ERROR'){const a=aiPlan;
-      h+=`<div class="cd" style="border-color:${a.action==='COMPRA'?'#14532d':a.action==='VENTA'?'#7f1d1d':'var(--bd)';margin-top:6px}"><div style="display:flex;justify-content:space-between;margin-bottom:5px"><span class="lb">🧠 PLAN IA</span>${B(a.action==='COMPRA'?'g':a.action==='VENTA'?'r':'y',a.action+' '+( a.confidence||'?')+'%')}</div>`;
+      h+=`<div class="cd" style="border-color:${a.action==='COMPRA'?'#14532d':a.action==='VENTA'?'#7f1d1d':'var(--bd)'}><div style="margin-top:6px"><div style="display:flex;justify-content:space-between;margin-bottom:5px"><span class="lb">🧠 PLAN IA</span>${B(a.action==='COMPRA'?'g':a.action==='VENTA'?'r':'y',a.action+' '+( a.confidence||'?')+'%')}</div>`;
       h+=`<div style="font-size:9px;line-height:1.5;margin-bottom:6px">${a.reasoning||''}</div>`;
       h+=`<div style="font-size:8px;color:var(--dm);margin-bottom:4px">📍 Entry: <b>${a.entry}</b> · SL: <b style="color:var(--r)">${a.sl}</b> · TP: <b style="color:var(--g)">${a.tp}</b></div>`;
       if(a.newsImpact)h+=`<div style="font-size:8px;color:var(--g);margin-bottom:2px">📰 ${a.newsImpact}</div>`;
