@@ -2,6 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
 <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
 <title>XAUUSD · Gold Trader v6</title>
 <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&display=swap" rel="stylesheet">
@@ -220,15 +221,16 @@ async function init(){
 
 // ══ MASTER UPDATE ══
 async function masterUpdate(){
-  if(updating)return;updating=true;
+  if(updating)return;updating=true;console.log('masterUpdate started');
   const lb=document.getElementById('logBox');if(lb){lb.style.display='block';lb.innerHTML='';}
   R();
 
   log('📰 Buscando noticias macro...','ld');
   let txt=await aiCall('Search latest financial news affecting gold XAUUSD: Fed, inflation, USD, bonds, ETF flows, central banks. Return ONLY JSON array (no markdown): [{"title":"str","impact":"positive"|"negative"|"neutral","summary":"1 sentence","source":"str"}] Max 8.',900,true);
+  console.log('News raw:',txt?.slice(0,100));
   let arr=parseJ(txt);
   if(Array.isArray(arr)){news=arr;log(`${arr.length} noticias macro`,'ok');}
-  else log('No se pudieron cargar noticias macro','er');
+  else{log('Noticias macro: reintentando parse...','er');console.log('Parse failed, raw:',txt);}
 
   log('🌍 Buscando noticias geopolíticas...','ld');
   txt=await aiCall('Search latest geopolitical news affecting gold: wars, tariffs, oil, sanctions, Middle East. Return ONLY JSON array (no markdown): [{"title":"str","impact":"positive"|"negative"|"neutral","summary":"1 sentence","source":"str"}] Max 6.',800,true);
@@ -241,7 +243,7 @@ async function masterUpdate(){
   arr=parseJ(txt);
   if(Array.isArray(arr)){social=arr;log(`${arr.length} opiniones sociales`,'ok');}
 
-  if(news.length===0){log('⚠️ No hay noticias cargadas, no se puede generar plan','er');updating=false;R();return;}
+  if(news.length===0){log('⚠️ Sin noticias, generando plan solo con datos técnicos...','er');}
   log('🧠 Generando Plan IA con '+news.length+' noticias y '+social.length+' opiniones...','ld');
   const _sr=calcSR(candles),_rsi=calcRSI(candles),_macd=calcMACD(candles);
   const nTxt=news.map(n=>`[${n.impact}] ${n.title}`).join('\n');
@@ -251,8 +253,9 @@ async function masterUpdate(){
 - SCALPING AGRESIVO de 30 min a 4 horas
 - Operar EN LA DIRECCIÓN MACRO (tendencia diaria/semanal)
 - Alta frecuencia: buscar MUCHAS operaciones con alta probabilidad (>65%)
-- TP bajo pero realista: buscar movimientos de $5-$15 que sean MUY probables
+- Buscar movimientos de MÍNIMO 100 pips ($10) en la dirección macro
 - SL según lote: $20 para 0.02L, $30 para 0.04L
+- TP mínimo $10 (100 pips), ideal $15-$25 en dirección de tendencia
 - Preferir trades frecuentes con TP pequeño pero seguro sobre trades grandes con TP lejano
 - Buscar micro-rebotes en soportes/resistencias, rupturas de rangos cortos, momentum trades
 - Si hay un setup probable aunque sea pequeño, TOMARLO. No esperar el trade perfecto.
@@ -273,13 +276,14 @@ CUENTA: $${bot.bal.toFixed(2)} | Lots: ${LOTS(bot.bal)} | 500:1
 INSTRUCCIONES DE RESPUESTA:
 - SIEMPRE da entry, sl, tp con PRECIOS NUMÉRICOS EXACTOS
 - Incluso si es ESPERAR, indica el precio ideal de entrada cuando se active
-- SL: $20 si lote es 0.02, $30 si lote es 0.04-0.05. TP: $5-$15 (movimientos probables y rápidos)
+- SL: $20 si lote es 0.02, $30 si lote es 0.04. TP: mínimo $10 (100 pips), buscar $15-$25 en dirección macro
 - Duración estimada del trade: 1-4 horas
 - Explica la dirección macro y por qué el scalp va en esa dirección
 
 JSON sin backticks:
 {"action":"COMPRA"|"VENTA"|"ESPERAR","confidence":0-100,"reasoning":"español 3-4 oraciones explicando setup y dirección macro","entry":"XXXX.XX","sl":"XXXX.XX","tp":"XXXX.XX","duration":"30min-4h estimado","macroDirection":"ALCISTA o BAJISTA con razón","risk":"advertencia específica del riesgo","newsImpact":"cómo afectan las noticias","socialSentiment":"qué dice la gente","rumors":"rumores relevantes","nextAction":"qué hacer si no se ejecuta el entry"}`,800);
 
+  console.log('Plan raw:',txt?.slice(0,200));
   const plan=parseJ(txt);
   if(plan&&plan.action){aiPlan=plan;log(`Plan: ${plan.action} conf:${plan.confidence}%`,'ok');checkBot(true);}
   else{log('Error generando plan','er');if(txt)aiPlan={action:'ERROR',reasoning:txt.slice(0,200)};}
