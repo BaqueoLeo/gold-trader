@@ -246,19 +246,36 @@ async function masterUpdate(){
   const nTxt=news.map(n=>`[${n.impact}] ${n.title}`).join('\n');
   const sTxt=social.map(n=>`[${n.sentiment}] ${n.title}: ${n.opinion}`).join('\n');
 
-  txt=await aiCall(`Analista jefe XAUUSD. Plan con TODA esta info:
-PRECIO: $${gold?.toFixed(2)||'?'} RSI:${_rsi.toFixed(1)} MACD:${_macd.toFixed(3)} SMA20:${sma(candles,20)?.toFixed(2)||'?'}
-S:${_sr.S.map(s=>'$'+s.toFixed(2))} R:${_sr.R.map(r=>'$'+r.toFixed(2))}
-BTC:$${corr.btc?.toFixed(0)||'?'} EUR:${corr.eur?.toFixed(4)||'?'}
-NOTICIAS(${news.length}):
-${nTxt||'N/A'}
-SOCIAL:
-${sTxt||'N/A'}
-CUENTA:$${bot.bal.toFixed(2)} Lots:${LOTS(bot.bal)} 500:1
+  txt=await aiCall(`Eres un scalper profesional de XAUUSD. Tu estrategia:
+- SCALPING de 1 a 4 horas máximo
+- BAJO RIESGO: solo operar setups con alta probabilidad (>75%)
+- Operar EN LA DIRECCIÓN MACRO (tendencia diaria/semanal)
+- SL ajustado (máx 3-5 dólares), TP con ratio mínimo 1:2
+- Si no hay setup claro con alta probabilidad, ESPERAR. No forzar trades.
+- Buscar entradas en retrocesos hacia soportes en tendencia alcista, o hacia resistencias en tendencia bajista
 
-REGLAS: SIEMPRE da entry,sl,tp NUMÉRICOS EXACTOS. Incluso si es ESPERAR. Risk:Reward 1:2 mínimo.
+DATOS EN TIEMPO REAL:
+Precio: $${gold?.toFixed(2)||'?'} | RSI: ${_rsi.toFixed(1)} | MACD: ${_macd.toFixed(3)} | SMA20: ${sma(candles,20)?.toFixed(2)||'?'}
+Soportes: ${_sr.S.map(s=>'$'+s.toFixed(2))} | Resistencias: ${_sr.R.map(r=>'$'+r.toFixed(2))}
+BTC: $${corr.btc?.toFixed(0)||'?'} | EUR/USD: ${corr.eur?.toFixed(4)||'?'}
+
+NOTICIAS (${news.length}):
+${nTxt||'N/A'}
+
+SENTIMIENTO SOCIAL:
+${sTxt||'N/A'}
+
+CUENTA: $${bot.bal.toFixed(2)} | Lots: ${LOTS(bot.bal)} | 500:1
+
+INSTRUCCIONES DE RESPUESTA:
+- SIEMPRE da entry, sl, tp con PRECIOS NUMÉRICOS EXACTOS
+- Incluso si es ESPERAR, indica el precio ideal de entrada cuando se active
+- SL máximo 3-5 dólares del entry
+- Duración estimada del trade: 1-4 horas
+- Explica la dirección macro y por qué el scalp va en esa dirección
+
 JSON sin backticks:
-{"action":"COMPRA"|"VENTA"|"ESPERAR","confidence":0-100,"reasoning":"español 3 oraciones","entry":"4XXX.XX","sl":"4XXX.XX","tp":"4XXX.XX","risk":"advertencia","newsImpact":"1 oración","socialSentiment":"1 oración","rumors":"1 oración","nextAction":"qué hacer si sube/baja"}`,800);
+{"action":"COMPRA"|"VENTA"|"ESPERAR","confidence":0-100,"reasoning":"español 3-4 oraciones explicando setup y dirección macro","entry":"XXXX.XX","sl":"XXXX.XX","tp":"XXXX.XX","duration":"tiempo estimado ej: 1-2 horas","macroDirection":"ALCISTA o BAJISTA con razón","risk":"advertencia específica del riesgo","newsImpact":"cómo afectan las noticias","socialSentiment":"qué dice la gente","rumors":"rumores relevantes","nextAction":"qué hacer si no se ejecuta el entry"}`,800);
 
   const plan=parseJ(txt);
   if(plan&&plan.action){aiPlan=plan;log(`Plan: ${plan.action} conf:${plan.confidence}%`,'ok');checkBot(true);}
@@ -386,6 +403,8 @@ function R(){try{
       h+=`<div style="display:flex;justify-content:space-between;margin-bottom:5px"><span class="lb">🧠 PLAN IA</span>${B(a.action==='COMPRA'?'g':a.action==='VENTA'?'r':'y',a.action+' '+(a.confidence||'?')+'%')}</div>`;
       h+=`<div style="font-size:9px;line-height:1.5;margin-bottom:6px">${a.reasoning||''}</div>`;
       h+=`<div style="font-size:8px;color:var(--dm);margin-bottom:4px">📍 Entry: <b>${a.entry||'?'}</b> · SL: <b style="color:var(--r)">${a.sl||'?'}</b> · TP: <b style="color:var(--g)">${a.tp||'?'}</b></div>`;
+      if(a.duration)h+=`<div style="font-size:8px;color:var(--b);margin-bottom:2px">⏱️ Duración: ${a.duration}</div>`;
+      if(a.macroDirection)h+=`<div style="font-size:8px;color:var(--p);margin-bottom:2px">📊 Macro: ${a.macroDirection}</div>`;
       if(a.newsImpact)h+=`<div style="font-size:8px;color:var(--g);margin-bottom:2px">📰 ${a.newsImpact}</div>`;
       if(a.socialSentiment)h+=`<div style="font-size:8px;color:var(--p);margin-bottom:2px">💬 ${a.socialSentiment}</div>`;
       if(a.rumors)h+=`<div style="font-size:8px;color:var(--y);margin-bottom:2px">🔮 ${a.rumors}</div>`;
