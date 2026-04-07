@@ -96,7 +96,7 @@ const fS=n=>n>=0?`+$${n.toFixed(2)}`:`-$${Math.abs(n).toFixed(2)}`;
 const fP=n=>n?`$${n.toFixed(2)}`:'—';
 const PNL=(t,e,c,l)=>(t==='BUY'?c-e:e-c)*l*100;
 const MG=(p,l)=>(p*l*100)/500;
-const LOTS=b=>b<200?0.03:b<500?0.05:b<1000?0.1:b<5000?0.2:b<20000?0.5:1;
+const LOTS=b=>b<150?0.02:b<400?0.04:b<1000?0.08:b<5000?0.15:b<20000?0.5:1;
 const B=(c,t)=>`<span class="bd ${c==='g'?'bg':c==='r'?'br':c==='y'?'by':''}">${t}</span>`;
 
 // ══ LOG ══
@@ -241,18 +241,21 @@ async function masterUpdate(){
   arr=parseJ(txt);
   if(Array.isArray(arr)){social=arr;log(`${arr.length} opiniones sociales`,'ok');}
 
-  log('🧠 Generando Plan IA...','ld');
+  if(news.length===0){log('⚠️ No hay noticias cargadas, no se puede generar plan','er');updating=false;R();return;}
+  log('🧠 Generando Plan IA con '+news.length+' noticias y '+social.length+' opiniones...','ld');
   const _sr=calcSR(candles),_rsi=calcRSI(candles),_macd=calcMACD(candles);
   const nTxt=news.map(n=>`[${n.impact}] ${n.title}`).join('\n');
   const sTxt=social.map(n=>`[${n.sentiment}] ${n.title}: ${n.opinion}`).join('\n');
 
   txt=await aiCall(`Eres un scalper profesional de XAUUSD. Tu estrategia:
-- SCALPING de 1 a 4 horas máximo
-- BAJO RIESGO: solo operar setups con alta probabilidad (>75%)
+- SCALPING AGRESIVO de 30 min a 4 horas
 - Operar EN LA DIRECCIÓN MACRO (tendencia diaria/semanal)
-- SL ajustado (máx 3-5 dólares), TP con ratio mínimo 1:2
-- Si no hay setup claro con alta probabilidad, ESPERAR. No forzar trades.
-- Buscar entradas en retrocesos hacia soportes en tendencia alcista, o hacia resistencias en tendencia bajista
+- Alta frecuencia: buscar MUCHAS operaciones con alta probabilidad (>65%)
+- TP bajo pero realista: buscar movimientos de $5-$15 que sean MUY probables
+- SL según lote: $20 para 0.02L, $30 para 0.04L
+- Preferir trades frecuentes con TP pequeño pero seguro sobre trades grandes con TP lejano
+- Buscar micro-rebotes en soportes/resistencias, rupturas de rangos cortos, momentum trades
+- Si hay un setup probable aunque sea pequeño, TOMARLO. No esperar el trade perfecto.
 
 DATOS EN TIEMPO REAL:
 Precio: $${gold?.toFixed(2)||'?'} | RSI: ${_rsi.toFixed(1)} | MACD: ${_macd.toFixed(3)} | SMA20: ${sma(candles,20)?.toFixed(2)||'?'}
@@ -270,12 +273,12 @@ CUENTA: $${bot.bal.toFixed(2)} | Lots: ${LOTS(bot.bal)} | 500:1
 INSTRUCCIONES DE RESPUESTA:
 - SIEMPRE da entry, sl, tp con PRECIOS NUMÉRICOS EXACTOS
 - Incluso si es ESPERAR, indica el precio ideal de entrada cuando se active
-- SL máximo 3-5 dólares del entry
+- SL: $20 si lote es 0.02, $30 si lote es 0.04-0.05. TP: $5-$15 (movimientos probables y rápidos)
 - Duración estimada del trade: 1-4 horas
 - Explica la dirección macro y por qué el scalp va en esa dirección
 
 JSON sin backticks:
-{"action":"COMPRA"|"VENTA"|"ESPERAR","confidence":0-100,"reasoning":"español 3-4 oraciones explicando setup y dirección macro","entry":"XXXX.XX","sl":"XXXX.XX","tp":"XXXX.XX","duration":"tiempo estimado ej: 1-2 horas","macroDirection":"ALCISTA o BAJISTA con razón","risk":"advertencia específica del riesgo","newsImpact":"cómo afectan las noticias","socialSentiment":"qué dice la gente","rumors":"rumores relevantes","nextAction":"qué hacer si no se ejecuta el entry"}`,800);
+{"action":"COMPRA"|"VENTA"|"ESPERAR","confidence":0-100,"reasoning":"español 3-4 oraciones explicando setup y dirección macro","entry":"XXXX.XX","sl":"XXXX.XX","tp":"XXXX.XX","duration":"30min-4h estimado","macroDirection":"ALCISTA o BAJISTA con razón","risk":"advertencia específica del riesgo","newsImpact":"cómo afectan las noticias","socialSentiment":"qué dice la gente","rumors":"rumores relevantes","nextAction":"qué hacer si no se ejecuta el entry"}`,800);
 
   const plan=parseJ(txt);
   if(plan&&plan.action){aiPlan=plan;log(`Plan: ${plan.action} conf:${plan.confidence}%`,'ok');checkBot(true);}
@@ -308,12 +311,12 @@ function checkBot(force){
       const pv=PNL(bot.pos.type,bot.pos.entry,p,bot.pos.lots);
       bot.bal+=pv;bot.trades.unshift({...bot.pos,exit:p,pnl:pv,date:new Date().toISOString()});
       bot.trades=bot.trades.slice(0,100);bot.tT++;pv>0?bot.w++:bot.l++;bot.pos=null;saveBot();}
-    if(!bot.pos&&(aiPlan.confidence||0)>=70&&bot.bal>10){
+    if(!bot.pos&&(aiPlan.confidence||0)>=55&&bot.bal>10){
       const lt=LOTS(bot.bal),m=MG(p,lt);
       if(m<bot.bal*0.8){
         const type=aiPlan.action==='COMPRA'?'BUY':'SELL';
         let sl=parseFloat(aiPlan.sl),tp=parseFloat(aiPlan.tp);
-        if(!sl||!tp){sl=type==='BUY'?p-5:p+5;tp=type==='BUY'?p+10:p-10;}
+        if(!sl||!tp){const slD=lt<=0.02?20:30;const tpD=lt<=0.02?10:15;sl=type==='BUY'?p-slD:p+slD;tp=type==='BUY'?p+tpD:p-tpD;}
         bot.pos={type,entry:p,lots:lt,margin:m,sl,tp,at:Date.now()};saveBot();
         log(`Trade abierto: ${type} ${lt}L @ ${fP(p)}`,'ok');
       }
